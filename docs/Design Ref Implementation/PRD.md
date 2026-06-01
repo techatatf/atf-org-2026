@@ -29,6 +29,15 @@ The final site should use the V2 design as the canonical source for:
 
 The production implementation should distribute that design across the existing routes. The homepage should use the full V2 landing flow. Interior pages should inherit the V2 layout language, header, footer, typography, buttons, cards, page hero treatment, and section rhythm, even where the exact V2 single-page sections are not copied one-to-one.
 
+## Source Precedence
+
+Use this precedence when repo files appear to disagree:
+
+1. This PRD and `Goal Prompt.md` define the implementation target and the prototype concepts to remove.
+2. `docs/design-ref/ATF Website v2.html`, `docs/design-ref/README.md`, and `docs/design-ref/colors_and_type.css` define the approved V2 visual direction.
+3. Existing app source defines useful route skeleton, content defaults, and reusable component boundaries to preserve where they do not conflict.
+4. Starter-app copy, old package names, selectable theme/version behavior, and prototype feedback workflows are historical.
+
 ## User Stories
 
 1. As a visitor, I want the website to open directly into the final ATF design, so that I am not asked to choose between prototype versions.
@@ -130,31 +139,29 @@ The implementation should primarily study:
 
 Useful but optional reference files:
 
-- `ATF Website v2-print.html`
 - `mobile-preview.html`
-- `_review/*.png`
 - `preview/opportunity-triangle.html`
 - `preview/logos.html`
 - `preview/type-scale.html`
 - `preview/navigation.html`
 - `preview/buttons.html`
 - `preview/cards.html`
+- `preview/colors-primary.html`
+- `preview/colors-neutral.html`
+- `preview/colors-semantic.html`
+- `preview/type-specimens.html`
+- `preview/spacing.html`
+- `preview/elevation.html`
+- `preview/inputs.html`
+- `preview/badges.html`
+- `preview/brandmark.html`
+- `preview/mobile-top.png`
 
-Cleanup candidates after the implementation plan is accepted:
+Current cleanup guidance:
 
-- `ATF Design System (Template) (1).zip`
-- `ATF Website.html`
-- `ATF Partners.html`
-- `share/`
-- `export/`
-- `uploads/`
-- `social/`
-- `collateral/`
-- `slides/`
-- `ui_kits/`
-- most of `preview/`
-- `_review/` after visual decisions are no longer needed
-- duplicate root-level exported HTML files outside the design reference folder
+- Keep `docs/design-ref/` in place during the V2 implementation. It is reference-only, but it is still the design source.
+- No large obsolete export folders are currently present in the repository.
+- After production assets are selected, duplicate logo/brandmark variants with different capitalization can be reviewed.
+- After the V2 implementation is accepted, `preview/` can be reduced if the team no longer needs component reference pages.
 
 When in doubt, keep the file. The cleanup goal is to reduce distractions for future agents, not to prove that the smallest possible folder can run.
-

@@ -7,17 +7,21 @@
 
 ## Sources
 
-The following files were provided as brand assets:
+This folder is a reference package, not production source code. The current
+repository stores normalized reference assets in `assets/`, fonts in `fonts/`,
+and component previews in `preview/`.
 
-- `uploads/ATF_Logo_Final.pdf` — Master logo PDF (Adobe Illustrator, created 2026-03-04)
-- `uploads/Color codes.pdf` — Adobe Illustrator color codes document
-- `uploads/Full-color-logo.{png,jpg,svg}` — Full color logo (red + black on white)
-- `uploads/Bright-color-logo.{png,jpg,svg}` — White/bright logo variant (white on dark)
-- `uploads/Dark-color-logo.{png,jpg,svg}` — Dark/monochrome logo variant (black on white)
-- `uploads/Brand-Mark_Red.{png,jpg}` — Africa continent brandmark in red
-- `uploads/Brand-Mark_White.{png,jpg}` — Africa continent brandmark in white
+The original brand package included:
 
-No codebase or Figma links were provided.
+- Master logo PDF
+- Color codes PDF
+- Full color logo variants
+- Bright/white logo variants
+- Dark/monochrome logo variants
+- Red and white Africa continent brandmarks
+
+No Figma link was provided. Production implementation guidance lives in
+`../Design Ref Implementation/`.
 
 ---
 
@@ -34,6 +38,9 @@ No codebase or Figma links were provided.
 
 ## CONTENT FUNDAMENTALS
 
+This section is tone and brand guidance. The V2 implementation PRD controls how
+that guidance should be mapped into the React app.
+
 **Tone:** Authoritative, forward-looking, inclusive. ATF speaks with confidence about Africa's technological future — neither defensive nor nostalgic, but proudly progressive.
 
 **Voice:**
@@ -49,7 +56,9 @@ No codebase or Figma links were provided.
 
 **Casing:** ALL CAPS for logotype and primary display headlines; Title Case for subheadings and body section titles; sentence case for body copy.
 
-**Unicode / Emoji:** Not used. No decorative characters.
+**Unicode / Emoji:** Not used. No decorative characters. Emoji flags in any
+prototype or reference copy should be treated as informal placeholders, not core
+brand elements.
 
 ---
 
@@ -149,7 +158,7 @@ The angled cut creates a triangular red shape that "pushes" into the image — s
 ### Iconography
 - No custom icon set provided
 - Brand relies on the Africa brandmark as primary iconographic element
-- Lucide Icons (CDN) used as a substitute for UI icons — consistent stroke-weight, minimal, professional
+- Lucide Icons used as a substitute for UI icons in references; production should use the installed `lucide-react` package.
 - No emoji in UI
 
 ### Animation
@@ -176,7 +185,7 @@ The angled cut creates a triangular red shape that "pushes" into the image — s
 
 ## ICONOGRAPHY
 
-**Approach:** No proprietary icon set provided. The brand mark (geometric Africa continent) serves as the primary visual icon. For UI contexts, **Lucide Icons** is used via CDN (`https://unpkg.com/lucide@latest`) — it matches the brand's clean, thin-stroke aesthetic.
+**Approach:** No proprietary icon set provided. The brand mark (geometric Africa continent) serves as the primary visual icon. For static reference previews, **Lucide Icons** may be loaded via CDN (`https://unpkg.com/lucide@latest`). In the production React app, use the installed `lucide-react` package instead of a CDN.
 
 **Assets in `assets/`:**
 - `logo-full-color.png` / `.svg` — Full horizontal logo (red + black)
@@ -190,39 +199,48 @@ The angled cut creates a triangular red shape that "pushes" into the image — s
 ## File Index
 
 ```
-README.md                     ← This file
-colors_and_type.css           ← CSS custom properties (colors, type, spacing)
-SKILL.md                      ← Agent skill descriptor
+README.md                     - This file
+colors_and_type.css           - CSS custom properties for colors, type, spacing
+ATF Website v2.html           - Primary single-page design reference
+mobile-preview.html           - Mobile viewport wrapper around the V2 reference
 
 assets/
-  logo-full-color.{png,svg}   ← Primary logo
-  logo-bright.{png,svg}       ← White logo for dark bg
-  logo-dark.{png,svg}         ← Dark/monochrome logo
-  brandmark-red.png           ← Africa mark in red
-  brandmark-white.png         ← Africa mark in white
+  logo-full-color.{png,svg}        - Primary logo
+  logo-bright.{png,svg}            - White logo for dark backgrounds
+  logo-dark.{png,svg}              - Dark/monochrome logo
+  brandmark-red.png                - Africa mark in red
+  brandmark-white.png              - Africa mark in white
+  Full-color-logo.png              - Original-cased primary logo export
+  Bright-color-logo.png            - Original-cased bright logo export
+  Dark-color-logo.png              - Original-cased dark logo export
+  Brand-Mark_Red.png               - Original-cased red brandmark export
+  Brand-Mark_White.png             - Original-cased white brandmark export
+  hero-person.jpg                  - Hero/person reference image
+  billboard-1.jpg                  - Billboard/challenge reference image
+  example-challenge-wf*.png        - Opportunity Triangle examples
+  example-a2-poster.jpg            - Poster-style triangle reference
+  mockup-billboard-*.jpg           - Billboard mockup references
+  photo-tech-professional.jpg      - Additional photography reference
+
+fonts/
+  Montserrat-*                - Brand-supplied Montserrat weights/styles
+  clesmont.ttf                - Accent/display font, usage still TBD
 
 preview/
-  colors-primary.html         ← Primary + brand color swatches
-  colors-neutral.html         ← Neutral gray scale
-  colors-semantic.html        ← Semantic color usage
-  type-scale.html             ← Typographic scale (Montserrat + DM Sans)
-  type-specimens.html         ← Typeface specimens
-  spacing.html                ← Spacing tokens
-  elevation.html              ← Shadow / elevation system
-  logos.html                  ← Logo variants
-  brandmark.html              ← Brandmark usage
-  buttons.html                ← Button components
-  inputs.html                 ← Form inputs
-  cards.html                  ← Card components
-  badges.html                 ← Tags and badges
-  navigation.html             ← Nav + header components
-
-ui_kits/
-  website/
-    index.html                ← ATF website prototype
-    Header.jsx
-    Hero.jsx
-    Footer.jsx
-    ProgramCard.jsx
-    EventCard.jsx
+  colors-primary.html         - Primary and brand color swatches
+  colors-neutral.html         - Neutral gray scale
+  colors-semantic.html        - Semantic color usage
+  type-scale.html             - Typographic scale
+  type-specimens.html         - Typeface specimens
+  spacing.html                - Spacing tokens
+  elevation.html              - Shadow/elevation system
+  logos.html                  - Logo variants
+  brandmark.html              - Brandmark usage
+  buttons.html                - Button components
+  inputs.html                 - Form inputs
+  cards.html                  - Card components
+  badges.html                 - Tags and badges
+  navigation.html             - Nav and header components
+  opportunity-triangle.html   - Opportunity Triangle reference
+  mobile-top.png              - Mobile preview screenshot
 ```

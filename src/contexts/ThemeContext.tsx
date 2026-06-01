@@ -43,6 +43,12 @@ const defaultLocalState: LocalState = {
   customColors: [],
 };
 
+const versionSearch = (nextVersion: Version) =>
+  ((prev: Record<string, unknown>) => ({
+    ...prev,
+    version: nextVersion,
+  })) as never;
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const search = useSearch({ strict: false }) as { version?: string };
@@ -76,7 +82,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isValidVersion(urlVersion)) {
       navigate({
-        search: (prev: Record<string, unknown>) => ({ ...prev, version }),
+        search: versionSearch(version),
         replace: true,
       });
     }
@@ -86,7 +92,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     _setVersion(newVersion);
     // Update URL instead of localStorage
     navigate({
-      search: (prev: Record<string, unknown>) => ({ ...prev, version: newVersion }),
+      search: versionSearch(newVersion),
       replace: true,
     });
     // Reset accent to theme default when switching versions

@@ -6,11 +6,12 @@ Use this prompt in a fresh Codex session from the repository root.
 /goal Implement the approved ATF Website V2 design reference as the single production design for this TanStack React app.
 
 Context:
-- The repository is the ATF website prototype app.
+- The repository currently contains an ATF website prototype-derived app.
 - The approved visual direction is in docs/design-ref/ATF Website v2.html.
 - The current app is a multi-page TanStack Router app, not a single-page static site.
 - The V2 reference is a single-page design artifact only. Do not copy it as one giant static page.
 - Preserve the useful app skeleton: routing, shared layout, reusable React components, Tailwind/shadcn-style primitives, public assets, and existing page structure.
+- Treat the PRD and this prompt as the implementation target. Treat existing prototype/version code as transitional unless this prompt explicitly says to keep a foundation.
 - Replace the prototype comparison system entirely. Do not add a new Version E.
 
 Primary objective:
