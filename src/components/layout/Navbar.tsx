@@ -1,6 +1,8 @@
 import { useState } from "react";
+import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,336 +10,257 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { useTheme } from "@/contexts/ThemeContext";
 
-interface NavItem {
-  label: string;
-  href?: string;
-  children?: { label: string; href: string }[];
-}
+type NavItem =
+  | { label: string; to: string; children?: never }
+  | { label: string; to?: never; children: { label: string; to: string }[] };
 
 const navItems: NavItem[] = [
   {
     label: "Who We Are",
     children: [
-      { label: "Our Mission, Vision and Story", href: "/about" },
-      { label: "The Team And Contributors", href: "/team" },
+      { label: "Our Mission, Vision and Story", to: "/about" },
+      { label: "The Team And Contributors", to: "/team" },
     ],
   },
   {
     label: "What We Do",
     children: [
-      { label: "ATF Consulting", href: "/consulting" },
-      { label: "ATF Challenge", href: "/challenge" },
-      { label: "ATF Chapters", href: "/chapters" },
+      { label: "ATF Consulting", to: "/consulting" },
+      { label: "ATF Challenge", to: "/challenge" },
+      { label: "ATF Chapters", to: "/chapters" },
     ],
   },
   {
     label: "Where We Work",
     children: [
-      { label: "Ghana", href: "/countries/ghana" },
-      { label: "Nigeria", href: "/countries/nigeria" },
-      { label: "Kenya", href: "/countries/kenya" },
-      { label: "South Africa", href: "/countries/south-africa" },
+      { label: "Ghana", to: "/countries/ghana" },
+      { label: "Nigeria", to: "/countries/nigeria" },
+      { label: "Kenya", to: "/countries/kenya" },
+      { label: "South Africa", to: "/countries/south-africa" },
     ],
   },
   {
     label: "Publications",
     children: [
-      { label: "Articles", href: "/articles" },
-      { label: "Research Papers", href: "/research" },
+      { label: "Articles", to: "/articles" },
+      { label: "Research Papers", to: "/research" },
+      { label: "Library", to: "/publications" },
     ],
   },
-  {
-    label: "News",
-    href: "/news",
-  },
+  { label: "Newsroom", to: "/news" },
 ];
 
-// All registered routes in the app
-const registeredRoutes = [
-  "/",
-  "/about",
-  "/team",
-  "/consulting",
-  "/challenge",
-  "/chapters",
-  "/news",
-  "/articles",
-  "/research",
-  "/publications",
-  "/privacy-policy",
-  "/terms-of-service",
-];
-
-// Check if route is registered or is a dynamic country route
-const isRegisteredRoute = (href: string) => {
-  if (registeredRoutes.includes(href)) return true;
-  // Handle dynamic country routes
-  if (href.startsWith("/countries/")) return true;
-  // Handle dynamic news routes
-  if (href.startsWith("/news/")) return true;
-  return false;
-};
-
-function NavLink({
-  href,
+function SmartLink({
+  to,
   children,
   className,
-  style,
   onClick,
 }: {
-  href: string;
-  children: React.ReactNode;
+  to: string;
+  children: ReactNode;
   className?: string;
-  style?: React.CSSProperties;
   onClick?: () => void;
 }) {
-  if (isRegisteredRoute(href)) {
+  if (to.startsWith("/countries/")) {
+    const country = to.replace("/countries/", "");
     return (
       <Link
-        to={href}
+        to="/countries/$country"
+        params={{ country }}
         className={className}
-        style={style}
         onClick={onClick}
       >
         {children}
       </Link>
     );
   }
-  // For unregistered routes, use a regular anchor that shows the path
+
   return (
-    <a
-      href={href}
-      className={className}
-      style={style}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick?.();
-        // Could show a toast or navigate to a 404 page
-      }}
-    >
+    <Link to={to} className={className} onClick={onClick}>
       {children}
-    </a>
-  );
-}
-
-function DesktopNav() {
-  const { theme } = useTheme();
-
-  return (
-    <nav className="hidden lg:flex items-center gap-1">
-      {navItems.map((item) =>
-        item.children ? (
-          <DropdownMenu key={item.label} modal={false}>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex items-center gap-1 px-4 py-2"
-                style={{ color: theme.foreground }}
-              >
-                {item.label}
-                <ChevronDown className="w-4 h-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="start"
-              className="min-w-[200px]"
-              style={{
-                backgroundColor: theme.card,
-                borderColor: theme.border,
-              }}
-            >
-              {item.children.map((child) => (
-                <DropdownMenuItem key={child.href} asChild>
-                  <NavLink
-                    href={child.href}
-                    className="cursor-pointer w-full"
-                    style={{ color: theme.foreground }}
-                  >
-                    {child.label}
-                  </NavLink>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <NavLink key={item.label} href={item.href!}>
-            <Button
-              variant="ghost"
-              className="px-4 py-2"
-              style={{ color: theme.foreground }}
-            >
-              {item.label}
-            </Button>
-          </NavLink>
-        )
-      )}
-    </nav>
-  );
-}
-
-function MobileNav() {
-  const { theme, accentColor } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen} modal={false}>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="lg:hidden">
-          <Menu className="w-6 h-6" style={{ color: theme.foreground }} />
-        </Button>
-      </SheetTrigger>
-      <SheetContent
-        side="left"
-        className="w-[300px] p-0"
-        style={{
-          backgroundColor: theme.background,
-          borderColor: theme.border,
-        }}
-      >
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div
-            className="flex items-center justify-between p-4 border-b"
-            style={{ borderColor: theme.border }}
-          >
-            <Link to="/" onClick={() => setIsOpen(false)}>
-              <img
-                src="/atf-assets/atf-logo-vector.svg"
-                alt="ATF"
-                className="h-8 w-auto"
-              />
-            </Link>
-          </div>
-
-          {/* Nav items */}
-          <div className="flex-1 overflow-y-auto p-4">
-            <Accordion type="single" collapsible className="w-full">
-              {navItems.map((item, index) =>
-                item.children ? (
-                  <AccordionItem
-                    key={item.label}
-                    value={`item-${index}`}
-                    className="border-b"
-                    style={{ borderColor: theme.border }}
-                  >
-                    <AccordionTrigger
-                      className="py-4 text-base font-medium"
-                      style={{ color: theme.foreground }}
-                    >
-                      {item.label}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col gap-2 pb-4">
-                        {item.children.map((child) => (
-                          <NavLink
-                            key={child.href}
-                            href={child.href}
-                            onClick={() => setIsOpen(false)}
-                            className="py-2 px-4 rounded-lg text-sm transition-colors"
-                            style={{
-                              color: theme.foregroundMuted,
-                            }}
-                          >
-                            {child.label}
-                          </NavLink>
-                        ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                ) : (
-                  <NavLink
-                    key={item.label}
-                    href={item.href!}
-                    onClick={() => setIsOpen(false)}
-                    className="flex py-4 text-base font-medium border-b"
-                    style={{
-                      color: theme.foreground,
-                      borderColor: theme.border,
-                    }}
-                  >
-                    {item.label}
-                  </NavLink>
-                )
-              )}
-            </Accordion>
-          </div>
-
-          {/* CTA */}
-          <div className="p-4 border-t" style={{ borderColor: theme.border }}>
-            <Link to="/challenge" onClick={() => setIsOpen(false)}>
-              <Button
-                className="w-full"
-                style={{
-                  backgroundColor: accentColor,
-                  color: theme.accentForeground,
-                }}
-              >
-                Join ATF Challenge
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </SheetContent>
-    </Sheet>
+    </Link>
   );
 }
 
 export function Navbar() {
-  const { theme, accentColor } = useTheme();
+  const [announcementVisible, setAnnouncementVisible] = useState(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const closeMobile = () => setMobileOpen(false);
 
   return (
-    <header
-      className="sticky top-0 z-40 border-b backdrop-blur-md"
-      style={{
-        backgroundColor: `${theme.background}e6`,
-        borderColor: theme.border,
-      }}
-    >
-      <div className="container mx-auto px-4 lg:px-6">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              src="/atf-assets/atf-logo-vector.svg"
-              alt="ATF"
-              className="h-10 lg:h-12 w-auto"
-            />
-            <span
-              className="hidden sm:block font-heading font-bold text-lg"
-              style={{ color: theme.foreground }}
-            >
-              African Technology Forum
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-atf-black text-white shadow-sm">
+      {announcementVisible ? (
+        <div className="border-b border-white/10 bg-atf-black">
+          <div className="atf-container flex min-h-11 items-center gap-3 py-2 text-sm">
+            <span className="bg-primary px-2 py-1 font-display text-[10px] font-black uppercase">
+              New
             </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <DesktopNav />
-
-          {/* CTA and Mobile menu */}
-          <div className="flex items-center gap-4">
-            <Link to="/challenge" className="hidden lg:block">
-              <Button
-                style={{
-                  backgroundColor: accentColor,
-                  color: theme.accentForeground,
-                }}
-              >
-                Join Challenge
-              </Button>
-            </Link>
-            <MobileNav />
+            <p className="hidden flex-1 text-white/75 sm:block">
+              <strong className="font-semibold text-white">
+                ATF Challenge 2026 is open
+              </strong>{" "}
+              - free AI training and mentorship for young Africans.
+              Applications close June 30.
+            </p>
+            <a
+              href="https://bit.ly/atf-wf"
+              target="_blank"
+              rel="noreferrer"
+              className="ml-auto font-display text-xs font-bold uppercase text-white underline decoration-primary decoration-2 underline-offset-4 hover:text-atf-red-bright"
+            >
+              Apply now
+            </a>
+            <button
+              type="button"
+              aria-label="Dismiss announcement"
+              className="inline-flex size-8 items-center justify-center rounded-md text-white/55 hover:bg-white/10 hover:text-white"
+              onClick={() => setAnnouncementVisible(false)}
+            >
+              <X className="size-4" aria-hidden="true" />
+            </button>
           </div>
         </div>
+      ) : null}
+
+      <div className="atf-container flex h-20 items-center justify-between gap-6">
+        <Link to="/" className="inline-flex items-center">
+          <img
+            src="/atf-assets/v2/logo-bright.svg"
+            alt="African Technology Forum"
+            className="h-10 w-auto"
+          />
+        </Link>
+
+        <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+          {navItems.map((item) =>
+            item.children ? (
+              <DropdownMenu key={item.label} modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="gap-1 rounded-md px-3 font-display text-xs font-bold uppercase text-white/75 hover:bg-white/10 hover:text-white"
+                  >
+                    {item.label}
+                    <ChevronDown className="size-4" aria-hidden="true" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="start"
+                  className="min-w-64 rounded-md border-white/10 bg-atf-black p-2 text-white shadow-xl"
+                >
+                  {item.children.map((child) => (
+                    <DropdownMenuItem
+                      key={child.to}
+                      asChild
+                      className="rounded-md focus:bg-white/10 focus:text-white"
+                    >
+                      <SmartLink
+                        to={child.to}
+                        className="block cursor-pointer px-3 py-2 text-sm text-white/75 hover:text-white"
+                      >
+                        {child.label}
+                      </SmartLink>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <SmartLink
+                key={item.to}
+                to={item.to}
+                className="rounded-md px-3 py-2 font-display text-xs font-bold uppercase text-white/75 hover:bg-white/10 hover:text-white"
+              >
+                {item.label}
+              </SmartLink>
+            ),
+          )}
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <Link
+            to="/consulting"
+            className="hidden rounded-md border border-white/20 px-4 py-2 font-display text-xs font-bold uppercase text-white/80 transition-colors hover:border-white/60 hover:text-white lg:inline-flex"
+          >
+            Partner With Us
+          </Link>
+          <Link to="/challenge" className="hidden atf-button lg:inline-flex">
+            Join Challenge
+          </Link>
+          <button
+            type="button"
+            className="inline-flex size-10 items-center justify-center rounded-md text-white hover:bg-white/10 lg:hidden"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((open) => !open)}
+          >
+            {mobileOpen ? (
+              <X className="size-6" aria-hidden="true" />
+            ) : (
+              <Menu className="size-6" aria-hidden="true" />
+            )}
+          </button>
+        </div>
       </div>
+
+      {mobileOpen ? (
+        <nav
+          aria-label="Mobile"
+          className="border-t border-white/10 bg-atf-black px-6 py-6 lg:hidden"
+        >
+          <div className="flex flex-col gap-1">
+            {navItems.map((item) =>
+              item.children ? (
+                <div key={item.label} className="border-b border-white/10 py-3">
+                  <p className="mb-3 font-display text-xs font-bold uppercase text-white/40">
+                    {item.label}
+                  </p>
+                  <div className="grid gap-2">
+                    {item.children.map((child) => (
+                      <SmartLink
+                        key={child.to}
+                        to={child.to}
+                        onClick={closeMobile}
+                        className="py-2 font-display text-base font-bold uppercase text-white hover:text-atf-red-bright"
+                      >
+                        {child.label}
+                      </SmartLink>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <SmartLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={closeMobile}
+                  className="border-b border-white/10 py-4 font-display text-base font-bold uppercase text-white hover:text-atf-red-bright"
+                >
+                  {item.label}
+                </SmartLink>
+              ),
+            )}
+          </div>
+          <div className="mt-6 grid gap-3">
+            <Link
+              to="/consulting"
+              onClick={closeMobile}
+              className="atf-button-outline atf-button-outline-light"
+            >
+              Partner With ATF
+            </Link>
+            <a
+              href="https://bit.ly/atf-wf"
+              target="_blank"
+              rel="noreferrer"
+              className="atf-button"
+              onClick={closeMobile}
+            >
+              Apply to Challenge
+            </a>
+          </div>
+        </nav>
+      ) : null}
     </header>
   );
 }

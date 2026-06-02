@@ -1,200 +1,108 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { ArrowLeft, Trophy, Calendar, Award, Lightbulb } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useTheme } from "@/contexts/ThemeContext";
+import { createFileRoute } from "@tanstack/react-router";
+import { Award, Calendar, Lightbulb, Trophy } from "lucide-react";
+
+import { AppLink } from "@/components/site/AppLink";
+import { ActionCard, ContentBand, PageHero, PageShell } from "@/components/site/Page";
 
 export const Route = createFileRoute("/challenge")({
   component: ChallengePage,
 });
 
+const timeline = [
+  { phase: "Applications Open", date: "May 1, 2026" },
+  { phase: "Application Deadline", date: "June 30, 2026" },
+  { phase: "Build Weekends", date: "July-August 2026" },
+  { phase: "Winners Announced", date: "September 2026" },
+];
+
 function ChallengePage() {
-  const { theme, accentColor, version } = useTheme();
-
-  const timeline = [
-    { phase: "Registration Opens", date: "January 2026" },
-    { phase: "Submission Deadline", date: "March 2026" },
-    { phase: "Judging Period", date: "April 2026" },
-    { phase: "Winners Announced", date: "May 2026" },
-  ];
-
   return (
-    <div className="min-h-[80vh] py-20" style={{ backgroundColor: theme.background }}>
-      <div className="container mx-auto px-6">
-        <Link to="/">
-          <Button
-            variant="ghost"
-            className="mb-8 gap-2"
-            style={{ color: theme.foregroundMuted }}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </Button>
-        </Link>
-
-        <div className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div
-              className={`w-16 h-16 mb-6 flex items-center justify-center ${
-                version === "D" ? "rounded-2xl" : "rounded-xl"
-              }`}
-              style={{ backgroundColor: "#fcba2f20" }}
+    <PageShell>
+      <PageHero
+        eyebrow="For Students & Young Professionals"
+        title="ATF Challenge"
+        icon={Trophy}
+        description="An annual innovation challenge empowering young Africans to build technology solutions for local problems."
+      />
+      <section className="grid bg-primary text-white lg:grid-cols-2">
+        <div className="flex flex-col justify-center px-6 py-16 md:px-10 lg:px-20">
+          <h2 className="font-display text-4xl font-black uppercase leading-tight md:text-6xl">
+            Don't just watch the AI revolution, build it.
+          </h2>
+          <p className="mt-6 max-w-xl text-base leading-8 text-white/80">
+            Participants receive AI training, mentor review, and a structured
+            path to build real-world solutions in healthcare, agriculture,
+            education, climate, and financial inclusion.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href="https://bit.ly/atf-wf"
+              target="_blank"
+              rel="noreferrer"
+              className="atf-button-light"
             >
-              <Trophy className="w-8 h-8" style={{ color: "#fcba2f" }} />
-            </div>
-
-            <h1
-              className="font-heading text-4xl md:text-5xl font-bold mb-4"
-              style={{ color: theme.foreground }}
+              Apply Now
+            </a>
+            <AppLink
+              href="/chapters"
+              className="atf-button-outline atf-button-outline-light"
             >
-              ATF Challenge
-            </h1>
-
-            <p
-              className="text-xl mb-8 leading-relaxed"
-              style={{ color: theme.foregroundMuted }}
-            >
-              Annual innovation challenge empowering young Africans to develop
-              technology solutions for local problems.
-            </p>
-          </motion.div>
-
-          {/* Challenge image */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className={`mb-8 overflow-hidden ${
-              version === "D" ? "rounded-3xl" : "rounded-xl"
-            }`}
-          >
-            <img
-              src="/atf-assets/ATF-Challenge-Winners-2024-2025.jpg"
-              alt="ATF Challenge Winners 2024-2025"
-              className="w-full h-auto object-cover"
-            />
-          </motion.div>
-
-          {/* Timeline */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className={`p-8 ${version === "D" ? "rounded-3xl" : "rounded-xl"}`}
-            style={{
-              backgroundColor: theme.card,
-              border: `1px solid ${theme.border}`,
-            }}
-          >
-            <h2
-              className="font-heading text-xl font-semibold mb-6 flex items-center gap-2"
-              style={{ color: theme.foreground }}
-            >
-              <Calendar className="w-5 h-5" style={{ color: accentColor }} />
-              2026 Challenge Timeline
-            </h2>
-            <div className="relative">
-              <div
-                className="absolute left-4 top-2 bottom-2 w-0.5"
-                style={{ backgroundColor: theme.border }}
-              />
-              <ul className="space-y-6">
-                {timeline.map((item, index) => (
-                  <motion.li
-                    key={item.phase}
-                    className="flex items-center gap-4 pl-10 relative"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
-                  >
-                    <div
-                      className="absolute left-2 w-4 h-4 rounded-full"
-                      style={{ backgroundColor: accentColor }}
-                    />
-                    <div>
-                      <p
-                        className="font-medium"
-                        style={{ color: theme.foreground }}
-                      >
-                        {item.phase}
-                      </p>
-                      <p
-                        className="text-sm"
-                        style={{ color: theme.foregroundMuted }}
-                      >
-                        {item.date}
-                      </p>
-                    </div>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="mt-8 grid md:grid-cols-2 gap-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <div
-              className={`p-6 ${version === "D" ? "rounded-2xl" : "rounded-xl"}`}
-              style={{
-                backgroundColor: theme.backgroundSecondary,
-                border: `1px solid ${theme.border}`,
-              }}
-            >
-              <Award className="w-8 h-8 mb-3" style={{ color: "#fcba2f" }} />
-              <h3
-                className="font-heading font-semibold mb-2"
-                style={{ color: theme.foreground }}
-              >
-                Prizes & Recognition
-              </h3>
-              <p className="text-sm" style={{ color: theme.foregroundMuted }}>
-                Winners receive funding, mentorship, and opportunities to scale
-                their solutions across Africa.
-              </p>
-            </div>
-            <div
-              className={`p-6 ${version === "D" ? "rounded-2xl" : "rounded-xl"}`}
-              style={{
-                backgroundColor: theme.backgroundSecondary,
-                border: `1px solid ${theme.border}`,
-              }}
-            >
-              <Lightbulb className="w-8 h-8 mb-3" style={{ color: "#fcba2f" }} />
-              <h3
-                className="font-heading font-semibold mb-2"
-                style={{ color: theme.foreground }}
-              >
-                Focus Areas
-              </h3>
-              <p className="text-sm" style={{ color: theme.foregroundMuted }}>
-                Healthcare, Agriculture, Education, Climate, and Financial
-                Inclusion.
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.p
-            className="mt-12 text-center p-6 rounded-xl"
-            style={{
-              backgroundColor: `${accentColor}10`,
-              color: theme.foregroundMuted,
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
-            This is a prototype stub page. Full content coming soon.
-          </motion.p>
+              Join a Chapter
+            </AppLink>
+          </div>
         </div>
-      </div>
-    </div>
+        <div className="relative min-h-[360px] bg-atf-black">
+          <img
+            src="/atf-assets/v2/billboard-1.jpg"
+            alt="ATF AI Challenge billboard"
+            className="absolute inset-0 size-full object-cover opacity-80"
+          />
+        </div>
+      </section>
+      <ContentBand muted>
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1fr]">
+          <div>
+            <h2 className="atf-section-title">2026 challenge timeline.</h2>
+            <p className="atf-body mt-6">
+              The current application window is open through June 30, 2026,
+              followed by chapter-hosted build weekends and mentor review.
+            </p>
+          </div>
+          <div className="rounded-md border border-atf-gray-200 bg-white p-6">
+            <h3 className="flex items-center gap-2 font-display text-xl font-black uppercase text-atf-black">
+              <Calendar className="size-5 text-primary" aria-hidden="true" />
+              Key Dates
+            </h3>
+            <ol className="mt-6 grid gap-5">
+              {timeline.map((item) => (
+                <li key={item.phase} className="grid grid-cols-[10px_1fr] gap-4">
+                  <span className="mt-2 size-2 rounded-full bg-primary" />
+                  <span>
+                    <span className="block font-display text-sm font-bold uppercase text-atf-black">
+                      {item.phase}
+                    </span>
+                    <span className="text-sm text-atf-gray-500">{item.date}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </ContentBand>
+      <ContentBand>
+        <div className="grid gap-6 md:grid-cols-2">
+          <ActionCard
+            icon={Award}
+            title="Prizes & Recognition"
+            description="Selected teams receive recognition, mentorship, partner introductions, and pathways to scale promising solutions."
+          />
+          <ActionCard
+            icon={Lightbulb}
+            title="Focus Areas"
+            description="The challenge centers practical technology ideas across healthcare, agriculture, education, climate, and financial inclusion."
+          />
+        </div>
+      </ContentBand>
+    </PageShell>
   );
 }

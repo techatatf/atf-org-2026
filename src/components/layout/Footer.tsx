@@ -1,193 +1,129 @@
 import { Link } from "@tanstack/react-router";
-import {
-  Facebook,
-  Twitter,
-  Linkedin,
-  Youtube,
-  Mail,
-  MapPin,
-} from "lucide-react";
-import { useTheme } from "@/contexts/ThemeContext";
+import { Facebook, Linkedin, Mail, MapPin, Twitter, Youtube } from "lucide-react";
 
 const footerLinks = {
-  programs: [
-    { label: "ATF Consulting", href: "/consulting" },
-    { label: "ATF Challenge", href: "/challenge" },
-    { label: "ATF Chapters", href: "/chapters" },
+  "What We Do": [
+    { label: "ATF Consulting", to: "/consulting" },
+    { label: "ATF Challenge", to: "/challenge" },
+    { label: "ATF Chapters", to: "/chapters" },
+    { label: "Our Story", to: "/about" },
+    { label: "Our Team", to: "/team" },
   ],
-  about: [
-    { label: "Our Story", href: "/about" },
-    { label: "Team", href: "/team" },
-    { label: "News", href: "/news" },
-  ],
-  resources: [
-    { label: "Articles", href: "/articles" },
-    { label: "Research", href: "/research" },
-    { label: "Publications", href: "/publications" },
+  Resources: [
+    { label: "Publications", to: "/publications" },
+    { label: "News", to: "/news" },
+    { label: "Research", to: "/research" },
+    { label: "Articles", to: "/articles" },
   ],
 };
 
 const socialLinks = [
-  { icon: Facebook, href: "#social-facebook", label: "Facebook" },
   { icon: Twitter, href: "#social-twitter", label: "Twitter" },
   { icon: Linkedin, href: "#social-linkedin", label: "LinkedIn" },
+  { icon: Facebook, href: "#social-facebook", label: "Facebook" },
   { icon: Youtube, href: "#social-youtube", label: "YouTube" },
 ];
 
 export function Footer() {
-  const { theme, accentColor, version } = useTheme();
-
   return (
-    <footer
-      className="border-t"
-      style={{
-        backgroundColor:
-          version === "B" ? theme.background : theme.backgroundSecondary,
-        borderColor: theme.border,
-      }}
-    >
-      <div className="container mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12">
-          {/* Brand column */}
-          <div className="lg:col-span-2">
-            <Link to="/" className="inline-block mb-6">
+    <footer className="bg-atf-black text-white">
+      <div className="atf-container py-16 lg:py-24">
+        <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-16">
+          <div>
+            <Link to="/" className="inline-flex">
               <img
-                src="/atf-assets/atf-logo-vector.svg"
-                alt="ATF"
-                className="h-12 w-auto"
+                src="/atf-assets/v2/logo-bright.svg"
+                alt="African Technology Forum"
+                className="h-10 w-auto"
               />
             </Link>
-            <p
-              className="text-sm leading-relaxed mb-6 max-w-sm"
-              style={{ color: theme.foregroundMuted }}
-            >
+            <p className="mt-7 max-w-sm text-sm leading-7 text-white/45">
               The African Technology Forum champions technology-driven solutions
               for Africa's development challenges through consulting, innovation
               challenges, and capacity building.
             </p>
-            <div className="flex gap-3">
+            <div className="mt-8 flex gap-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
-                  className={`w-10 h-10 flex items-center justify-center transition-colors ${
-                    version === "D" ? "rounded-full" : "rounded-lg"
-                  }`}
-                  style={{
-                    backgroundColor: `${accentColor}15`,
-                    color: accentColor,
-                  }}
                   aria-label={social.label}
+                  className="inline-flex size-10 items-center justify-center rounded-md border border-white/10 text-white/45 transition-colors hover:border-atf-red-bright hover:text-atf-red-bright"
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="size-4" aria-hidden="true" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Programs links */}
-          <div>
-            <h4
-              className="font-heading font-semibold mb-4"
-              style={{ color: theme.foreground }}
-            >
-              Programs
-            </h4>
-            <ul className="space-y-3">
-              {footerLinks.programs.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-sm transition-colors hover:underline"
-                    style={{ color: theme.foregroundMuted }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {Object.entries(footerLinks).map(([title, links]) => (
+            <div key={title}>
+              <h2 className="font-display text-xs font-bold uppercase text-white">
+                {title}
+              </h2>
+              <ul className="mt-7 space-y-4">
+                {links.map((link) => (
+                  <li key={link.to}>
+                    <Link
+                      to={link.to}
+                      className="text-sm text-white/45 transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
-          {/* About links */}
           <div>
-            <h4
-              className="font-heading font-semibold mb-4"
-              style={{ color: theme.foreground }}
-            >
-              About
-            </h4>
-            <ul className="space-y-3">
-              {footerLinks.about.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-sm transition-colors hover:underline"
-                    style={{ color: theme.foregroundMuted }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4
-              className="font-heading font-semibold mb-4"
-              style={{ color: theme.foreground }}
-            >
-              Contact
-            </h4>
-            <ul className="space-y-3">
+            <h2 className="font-display text-xs font-bold uppercase text-white">
+              Connect
+            </h2>
+            <ul className="mt-7 space-y-4 text-sm text-white/45">
               <li>
                 <a
                   href="mailto:info@atfglobal.org"
-                  className="flex items-center gap-2 text-sm"
-                  style={{ color: theme.foregroundMuted }}
+                  className="inline-flex items-center gap-2 transition-colors hover:text-white"
                 >
-                  <Mail className="w-4 h-4" style={{ color: accentColor }} />
+                  <Mail className="size-4 text-primary" aria-hidden="true" />
                   info@atfglobal.org
                 </a>
               </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="size-4 text-primary" aria-hidden="true" />
+                Accra, Ghana
+              </li>
               <li>
-                <span
-                  className="flex items-start gap-2 text-sm"
-                  style={{ color: theme.foregroundMuted }}
+                <Link
+                  to="/consulting"
+                  className="transition-colors hover:text-white"
                 >
-                  <MapPin
-                    className="w-4 h-4 mt-0.5"
-                    style={{ color: accentColor }}
-                  />
-                  Accra, Ghana
-                </span>
+                  Partner With Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/chapters"
+                  className="transition-colors hover:text-white"
+                >
+                  Join a Chapter
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div
-          className="mt-12 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4"
-          style={{ borderColor: theme.border }}
-        >
-          <p className="text-sm" style={{ color: theme.foregroundMuted }}>
+        <div className="flex flex-col gap-4 pt-8 text-xs text-white/30 md:flex-row md:items-center md:justify-between">
+          <p>
             &copy; {new Date().getFullYear()} African Technology Forum. All
             rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link
-              to="/privacy-policy"
-              className="text-sm hover:underline"
-              style={{ color: theme.foregroundMuted }}
-            >
+            <Link to="/privacy-policy" className="hover:text-white/60">
               Privacy Policy
             </Link>
-            <Link
-              to="/terms-of-service"
-              className="text-sm hover:underline"
-              style={{ color: theme.foregroundMuted }}
-            >
+            <Link to="/terms-of-service" className="hover:text-white/60">
               Terms of Service
             </Link>
           </div>

@@ -1,98 +1,105 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
-/* ATF Theme Variables - dynamically set via ThemeContext */
-:root {
-  /* Default theme values (Version A: Pan-African) */
-  --theme-background: #ffffff;
-  --theme-background-secondary: #f8f9fa;
-  --theme-foreground: #231f20;
-  --theme-foreground-muted: #6b7280;
-  --theme-card: #ffffff;
-  --theme-card-foreground: #231f20;
-  --theme-border: #e5e7eb;
-  --theme-accent: #51b847;
-  --theme-accent-foreground: #ffffff;
-  --theme-font-heading: "Poppins", sans-serif;
-  --theme-font-body: "Inter", sans-serif;
-
-  /* ATF Brand Colors */
-  --atf-green: #51b847;
-  --atf-yellow: #fcba2f;
-  --atf-red: #ee4035;
-  --atf-dark: #231f20;
-
-  /* shadcn/ui variables - keep for component compatibility */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.871 0.006 286.286);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.871 0.006 286.286);
+@font-face {
+  font-family: "Montserrat";
+  src: url("/atf-assets/fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-.dark {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.141 0.005 285.823);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.141 0.005 285.823);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.21 0.006 285.885);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.274 0.006 286.033);
-  --input: oklch(0.274 0.006 286.033);
-  --ring: oklch(0.442 0.017 285.786);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.274 0.006 286.033);
-  --sidebar-ring: oklch(0.442 0.017 285.786);
+@font-face {
+  font-family: "Montserrat";
+  src: url("/atf-assets/fonts/Montserrat-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/atf-assets/fonts/Montserrat-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/atf-assets/fonts/Montserrat-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/atf-assets/fonts/Montserrat-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/atf-assets/fonts/Montserrat-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --atf-red: #f90036;
+  --atf-red-bright: #ff3358;
+  --atf-red-dark: #c0002a;
+  --atf-black: #0a0a0a;
+  --atf-ink: #171717;
+  --atf-gray-800: #262626;
+  --atf-gray-700: #404040;
+  --atf-gray-500: #737373;
+  --atf-gray-300: #d4d4d4;
+  --atf-gray-200: #e5e5e5;
+  --atf-gray-100: #f5f5f5;
+  --atf-gray-50: #fafafa;
+  --atf-white: #ffffff;
+
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "DM Sans", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #f90036;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #ffe5ea;
+  --accent-foreground: #171717;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: #ffffff;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #f90036;
+  --chart-1: #f90036;
+  --chart-2: #0a0a0a;
+  --chart-3: #737373;
+  --chart-4: #ff3358;
+  --chart-5: #c0002a;
+  --radius: 0.375rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #171717;
+  --sidebar-primary: #f90036;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5f5f5;
+  --sidebar-accent-foreground: #171717;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #f90036;
 }
 
 @theme inline {
@@ -120,10 +127,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 2px);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -132,132 +139,119 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-
-  /* ATF Theme Colors for Tailwind */
-  --color-theme-bg: var(--theme-background);
-  --color-theme-bg-secondary: var(--theme-background-secondary);
-  --color-theme-fg: var(--theme-foreground);
-  --color-theme-fg-muted: var(--theme-foreground-muted);
-  --color-theme-card: var(--theme-card);
-  --color-theme-card-fg: var(--theme-card-foreground);
-  --color-theme-border: var(--theme-border);
-  --color-theme-accent: var(--theme-accent);
-  --color-theme-accent-fg: var(--theme-accent-foreground);
-
-  /* ATF Brand Colors for Tailwind */
-  --color-atf-green: var(--atf-green);
-  --color-atf-yellow: var(--atf-yellow);
   --color-atf-red: var(--atf-red);
-  --color-atf-dark: var(--atf-dark);
+  --color-atf-red-dark: var(--atf-red-dark);
+  --color-atf-black: var(--atf-black);
+  --color-atf-ink: var(--atf-ink);
+  --color-atf-gray-50: var(--atf-gray-50);
+  --color-atf-gray-100: var(--atf-gray-100);
+  --color-atf-gray-200: var(--atf-gray-200);
+  --color-atf-gray-500: var(--atf-gray-500);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    letter-spacing: 0;
   }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    overflow-y: scroll;
+  }
+
   body {
-    @apply m-0;
-    font-family: var(--theme-font-body);
+    @apply m-0 bg-background text-foreground;
+    font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--theme-background);
-    color: var(--theme-foreground);
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
   }
 
-  /* Hide default scrollbar but keep functionality */
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(128, 128, 128, 0.4) transparent;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    letter-spacing: 0;
   }
 
-  html::-webkit-scrollbar {
-    width: 8px;
+  a,
+  button {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+}
+
+@layer components {
+  .atf-container {
+    @apply mx-auto w-full max-w-7xl px-6 lg:px-10;
   }
 
-  html::-webkit-scrollbar-track {
-    background: transparent;
+  .atf-eyebrow {
+    @apply mb-5 flex items-center gap-3 font-display text-xs font-bold uppercase text-primary;
   }
 
-  html::-webkit-scrollbar-thumb {
-    background: rgba(128, 128, 128, 0.4);
+  .atf-eyebrow::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 8px solid var(--atf-red);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    flex-shrink: 0;
+  }
+
+  .atf-section-title {
+    @apply font-display text-3xl font-black uppercase leading-tight text-atf-black md:text-5xl;
+  }
+
+  .atf-body {
+    @apply text-base leading-7 text-atf-gray-500;
+  }
+
+  .atf-card {
+    @apply border border-atf-gray-200 bg-white p-6 shadow-sm;
+    border-radius: 6px;
+  }
+
+  .atf-card-dark {
+    @apply border border-white/10 bg-white/5 p-6 text-white;
+    border-radius: 6px;
+  }
+
+  .atf-link {
+    @apply inline-flex items-center gap-2 font-display text-xs font-bold uppercase text-atf-ink underline decoration-primary decoration-2 underline-offset-8 transition-colors hover:text-primary;
+  }
+
+  .atf-button {
+    @apply inline-flex items-center justify-center gap-2 bg-primary px-6 py-3 font-display text-xs font-bold uppercase text-white transition-colors hover:bg-atf-red-dark;
     border-radius: 4px;
   }
 
-  html::-webkit-scrollbar-thumb:hover {
-    background: rgba(128, 128, 128, 0.6);
+  .atf-button-light {
+    @apply inline-flex items-center justify-center gap-2 bg-white px-6 py-3 font-display text-xs font-bold uppercase text-primary transition-colors hover:bg-transparent hover:text-white;
+    border: 1.5px solid var(--atf-white);
+    border-radius: 4px;
   }
 
-  /* Prevent layout shift from scrollbar */
-  html {
-    overflow-y: scroll;
-    scrollbar-gutter: stable;
+  .atf-button-outline {
+    @apply inline-flex items-center justify-center gap-2 border px-6 py-3 font-display text-xs font-bold uppercase transition-colors;
+    border-radius: 4px;
   }
-}
 
-code {
-  font-family:
-    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
+  .atf-button-outline-light {
+    @apply border-white/70 text-white hover:bg-white hover:text-primary;
+  }
 
-/* Theme typography utilities */
-.font-heading {
-  font-family: var(--theme-font-heading);
-}
+  .atf-button-outline-dark {
+    @apply border-atf-black text-atf-black hover:bg-atf-black hover:text-white;
+  }
 
-.font-body {
-  font-family: var(--theme-font-body);
-}
-
-/* Smooth transitions for theme changes */
-.theme-transition,
-header,
-footer,
-nav,
-.card,
-button,
-a {
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease;
-}
-
-/* Dark theme scrollbar */
-.dark html::-webkit-scrollbar-thumb,
-html.dark::-webkit-scrollbar-thumb {
-  background: rgba(200, 200, 200, 0.3);
-}
-
-.dark html::-webkit-scrollbar-thumb:hover,
-html.dark::-webkit-scrollbar-thumb:hover {
-  background: rgba(200, 200, 200, 0.5);
-}
-
-/* Kente-inspired geometric patterns for Version A */
-.pattern-kente {
-  background-image:
-    linear-gradient(45deg, var(--atf-green) 25%, transparent 25%),
-    linear-gradient(-45deg, var(--atf-yellow) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, var(--atf-red) 75%),
-    linear-gradient(-45deg, transparent 75%, var(--theme-accent) 75%);
-  background-size: 40px 40px;
-  background-position:
-    0 0,
-    0 20px,
-    20px -20px,
-    -20px 0px;
-  opacity: 0.1;
-}
-
-/* Gradient background for Version B */
-.gradient-tech {
-  background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
-}
-
-/* Organic blob shapes for Version D */
-.blob-shape {
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  .opportunity-cut {
+    clip-path: polygon(54% 0, 100% 0, 100% 100%, 34% 100%);
+  }
 }
