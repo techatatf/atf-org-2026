@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Users } from "lucide-react";
 
-import { ContentBand, PageHero, PageShell } from "@/components/site/Page";
+import { ContentBand, SubpageTemplate, SurfaceCard } from "@/components/site/Page";
 
 export const Route = createFileRoute("/team")({
   component: TeamPage,
@@ -17,13 +17,15 @@ const teamGroups = [
 
 function TeamPage() {
   return (
-    <PageShell>
-      <PageHero
-        eyebrow="Who We Are"
-        title="The Team & Contributors"
-        icon={Users}
-        description="Meet the people and contributor groups driving ATF's mission to transform Africa through science and technology."
-      />
+    <SubpageTemplate
+      hero={{
+        eyebrow: "Who We Are",
+        title: "The Team & Contributors",
+        icon: Users,
+        description:
+          "Meet the people and contributor groups driving ATF's mission to transform Africa through science and technology.",
+      }}
+    >
       <ContentBand>
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1fr]">
           <div>
@@ -34,7 +36,7 @@ function TeamPage() {
               programs relevant to their communities.
             </p>
           </div>
-          <div className="rounded-md border border-atf-gray-200 bg-white p-6">
+          <SurfaceCard hover={false}>
             <h3 className="font-display text-xl font-black uppercase text-atf-black">
               Team Structure
             </h3>
@@ -45,15 +47,15 @@ function TeamPage() {
                   className="flex items-center justify-between gap-4 py-4"
                 >
                   <span className="font-medium text-atf-ink">{group.name}</span>
-                  <span className="rounded-md bg-primary/10 px-3 py-1 text-sm font-bold text-primary">
+                  <span className="bg-primary/10 px-3 py-1 text-sm font-bold text-primary">
                     {group.count}
                   </span>
                 </div>
               ))}
             </div>
-          </div>
+          </SurfaceCard>
         </div>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }

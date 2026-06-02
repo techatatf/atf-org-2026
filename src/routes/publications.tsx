@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen, FileText, Library, Newspaper } from "lucide-react";
 
 import { AppLink } from "@/components/site/AppLink";
-import { ContentBand, PageHero, PageShell } from "@/components/site/Page";
+import { ContentBand, SubpageTemplate, SurfaceCard } from "@/components/site/Page";
 import { publicationCategories } from "@/lib/site-data";
 
 export const Route = createFileRoute("/publications")({
@@ -18,23 +18,26 @@ const icons = {
 
 function PublicationsPage() {
   return (
-    <PageShell muted>
-      <PageHero
-        eyebrow="Resources"
-        title="Publications"
-        icon={Library}
-        description="Explore ATF's library of thought leadership articles, research papers, reports, and implementation case studies."
-      />
+    <SubpageTemplate
+      muted
+      hero={{
+        eyebrow: "Resources",
+        title: "Publications",
+        icon: Library,
+        description:
+          "Explore ATF's library of thought leadership articles, research papers, reports, and implementation case studies.",
+      }}
+    >
       <ContentBand>
         <div className="grid gap-6 md:grid-cols-2">
           {publicationCategories.map((category) => {
             const Icon = icons[category.title];
             const card = (
-              <article
+              <SurfaceCard
                 key={category.title}
-                className="h-full rounded-md border border-atf-gray-200 bg-white p-6 transition-colors hover:bg-atf-gray-50"
+                className="p-6"
               >
-                <div className="mb-5 inline-flex size-12 items-center justify-center rounded-md bg-primary/10 text-primary">
+                <div className="mb-5 inline-flex size-12 items-center justify-center bg-primary/10 text-primary">
                   <Icon className="size-6" aria-hidden="true" />
                 </div>
                 <div className="flex items-start justify-between gap-4">
@@ -46,11 +49,11 @@ function PublicationsPage() {
                       {category.description}
                     </p>
                   </div>
-                  <span className="rounded-md bg-primary/10 px-3 py-1 text-sm font-bold text-primary">
+                  <span className="bg-primary/10 px-3 py-1 text-sm font-bold text-primary">
                     {category.count}
                   </span>
                 </div>
-              </article>
+              </SurfaceCard>
             );
 
             if (!("href" in category)) return card;
@@ -63,6 +66,6 @@ function PublicationsPage() {
           })}
         </div>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }

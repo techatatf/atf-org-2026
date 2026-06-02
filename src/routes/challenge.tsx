@@ -1,8 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Award, Calendar, Lightbulb, Trophy } from "lucide-react";
 
-import { AppLink } from "@/components/site/AppLink";
-import { ActionCard, ContentBand, PageHero, PageShell } from "@/components/site/Page";
+import {
+  ActionCard,
+  ContentBand,
+  OpportunityLink,
+  SubpageTemplate,
+  SurfaceCard,
+} from "@/components/site/Page";
 
 export const Route = createFileRoute("/challenge")({
   component: ChallengePage,
@@ -17,13 +22,15 @@ const timeline = [
 
 function ChallengePage() {
   return (
-    <PageShell>
-      <PageHero
-        eyebrow="For Students & Young Professionals"
-        title="ATF Challenge"
-        icon={Trophy}
-        description="An annual innovation challenge empowering young Africans to build technology solutions for local problems."
-      />
+    <SubpageTemplate
+      hero={{
+        eyebrow: "For Students & Young Professionals",
+        title: "ATF Challenge",
+        icon: Trophy,
+        description:
+          "An annual innovation challenge empowering young Africans to build technology solutions for local problems.",
+      }}
+    >
       <section className="grid bg-primary text-white lg:grid-cols-2">
         <div className="flex flex-col justify-center px-6 py-16 md:px-10 lg:px-20">
           <h2 className="font-display text-4xl font-black uppercase leading-tight md:text-6xl">
@@ -35,20 +42,23 @@ function ChallengePage() {
             education, climate, and financial inclusion.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a
+            <OpportunityLink
               href="https://bit.ly/atf-wf"
+              variant="light"
+              size="lg"
               target="_blank"
               rel="noreferrer"
-              className="atf-button-light"
             >
               Apply Now
-            </a>
-            <AppLink
+            </OpportunityLink>
+            <OpportunityLink
               href="/chapters"
-              className="atf-button-outline atf-button-outline-light"
+              variant="lightOutline"
+              size="lg"
+              corner={false}
             >
               Join a Chapter
-            </AppLink>
+            </OpportunityLink>
           </div>
         </div>
         <div className="relative min-h-[360px] bg-atf-black">
@@ -68,7 +78,7 @@ function ChallengePage() {
               followed by chapter-hosted build weekends and mentor review.
             </p>
           </div>
-          <div className="rounded-md border border-atf-gray-200 bg-white p-6">
+          <SurfaceCard hover={false}>
             <h3 className="flex items-center gap-2 font-display text-xl font-black uppercase text-atf-black">
               <Calendar className="size-5 text-primary" aria-hidden="true" />
               Key Dates
@@ -76,7 +86,7 @@ function ChallengePage() {
             <ol className="mt-6 grid gap-5">
               {timeline.map((item) => (
                 <li key={item.phase} className="grid grid-cols-[10px_1fr] gap-4">
-                  <span className="mt-2 size-2 rounded-full bg-primary" />
+                  <span className="mt-2 h-0 w-0 border-y-[5px] border-l-[8px] border-y-transparent border-l-primary" />
                   <span>
                     <span className="block font-display text-sm font-bold uppercase text-atf-black">
                       {item.phase}
@@ -86,7 +96,7 @@ function ChallengePage() {
                 </li>
               ))}
             </ol>
-          </div>
+          </SurfaceCard>
         </div>
       </ContentBand>
       <ContentBand>
@@ -103,6 +113,6 @@ function ChallengePage() {
           />
         </div>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }

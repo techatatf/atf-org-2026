@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Building2, Lightbulb, MapPin, Users } from "lucide-react";
 
-import { ActionCard, ContentBand, EmptyState, PageHero, PageShell, StatGrid } from "@/components/site/Page";
+import {
+  ActionCard,
+  ContentBand,
+  EmptyState,
+  StatGrid,
+  SubpageTemplate,
+} from "@/components/site/Page";
 import { countryData } from "@/lib/site-data";
 
 export const Route = createFileRoute("/countries/$country")({
@@ -22,17 +28,19 @@ function CountryPage() {
   }
 
   return (
-    <PageShell muted>
-      <PageHero
-        eyebrow="Where We Work"
-        title={`ATF ${data.name}`}
-        icon={MapPin}
-        description={
+    <SubpageTemplate
+      muted
+      hero={{
+        eyebrow: "Where We Work",
+        title: `ATF ${data.name}`,
+        icon: MapPin,
+        description: (
           <>
             Headquarters: {data.capital}. {data.description}
           </>
-        }
-      />
+        ),
+      }}
+    >
       <ContentBand>
         <StatGrid stats={data.stats} />
       </ContentBand>
@@ -55,6 +63,6 @@ function CountryPage() {
           />
         </div>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }

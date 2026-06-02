@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Shield } from "lucide-react";
 
-import { ContentBand, PageHero, PageShell } from "@/components/site/Page";
+import { ArticleCard, ContentBand, SubpageTemplate } from "@/components/site/Page";
 
 export const Route = createFileRoute("/privacy-policy")({
   component: PrivacyPolicyPage,
@@ -42,28 +42,27 @@ const sections = [
 
 function PrivacyPolicyPage() {
   return (
-    <PageShell muted>
-      <PageHero
-        eyebrow="Legal"
-        title="Privacy Policy"
-        icon={Shield}
-        description="Last updated: January 1, 2026. This policy explains how African Technology Forum collects, uses, and protects information."
-      />
+    <SubpageTemplate
+      muted
+      hero={{
+        eyebrow: "Legal",
+        title: "Privacy Policy",
+        icon: Shield,
+        description:
+          "Last updated: January 1, 2026. This policy explains how African Technology Forum collects, uses, and protects information.",
+      }}
+    >
       <ContentBand>
         <div className="mx-auto grid max-w-3xl gap-5">
           {sections.map((section) => (
-            <section
+            <ArticleCard
               key={section.title}
-              className="rounded-md border border-atf-gray-200 bg-white p-6"
-            >
-              <h2 className="font-display text-xl font-black uppercase text-atf-black">
-                {section.title}
-              </h2>
-              <p className="atf-body mt-3">{section.content}</p>
-            </section>
+              title={section.title}
+              description={section.content}
+            />
           ))}
         </div>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }

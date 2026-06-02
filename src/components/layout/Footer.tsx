@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Linkedin, Mail, MapPin, Twitter, Youtube } from "lucide-react";
 
+import { SiteLogo } from "@/components/site/Page";
+
 const footerLinks = {
   "What We Do": [
     { label: "ATF Consulting", to: "/consulting" },
@@ -31,11 +33,7 @@ export function Footer() {
         <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-16">
           <div>
             <Link to="/" className="inline-flex">
-              <img
-                src="/atf-assets/v2/logo-bright.svg"
-                alt="African Technology Forum"
-                className="h-10 w-auto"
-              />
+              <SiteLogo variant="bright" className="h-10 max-w-[220px]" />
             </Link>
             <p className="mt-7 max-w-sm text-sm leading-7 text-white/45">
               The African Technology Forum champions technology-driven solutions
@@ -48,7 +46,7 @@ export function Footer() {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="inline-flex size-10 items-center justify-center rounded-md border border-white/10 text-white/45 transition-colors hover:border-atf-red-bright hover:text-atf-red-bright"
+                  className="inline-flex size-10 items-center justify-center border border-white/10 text-white/45 transition-colors hover:border-atf-red-bright hover:text-atf-red-bright"
                 >
                   <social.icon className="size-4" aria-hidden="true" />
                 </a>

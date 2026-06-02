@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { IconButton, OpportunityLink, SiteLogo } from "@/components/site/Page";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -90,9 +90,9 @@ export function Navbar() {
   const closeMobile = () => setMobileOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-atf-black text-white shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-atf-gray-200 bg-white text-atf-ink shadow-sm">
       {announcementVisible ? (
-        <div className="border-b border-white/10 bg-atf-black">
+        <div className="border-b border-white/10 bg-atf-black text-white">
           <div className="atf-container flex min-h-11 items-center gap-3 py-2 text-sm">
             <span className="bg-primary px-2 py-1 font-display text-[10px] font-black uppercase">
               New
@@ -112,25 +112,21 @@ export function Navbar() {
             >
               Apply now
             </a>
-            <button
-              type="button"
+            <IconButton
               aria-label="Dismiss announcement"
-              className="inline-flex size-8 items-center justify-center rounded-md text-white/55 hover:bg-white/10 hover:text-white"
+              variant="ghost"
+              className="size-8 text-white/55 hover:text-white"
               onClick={() => setAnnouncementVisible(false)}
             >
               <X className="size-4" aria-hidden="true" />
-            </button>
+            </IconButton>
           </div>
         </div>
       ) : null}
 
       <div className="atf-container flex h-20 items-center justify-between gap-6">
         <Link to="/" className="inline-flex items-center">
-          <img
-            src="/atf-assets/v2/logo-bright.svg"
-            alt="African Technology Forum"
-            className="h-10 w-auto"
-          />
+          <SiteLogo variant="fullColor" className="h-10 max-w-[220px]" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
@@ -138,27 +134,27 @@ export function Navbar() {
             item.children ? (
               <DropdownMenu key={item.label} modal={false}>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="gap-1 rounded-md px-3 font-display text-xs font-bold uppercase text-white/75 hover:bg-white/10 hover:text-white"
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-1 px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-atf-black"
                   >
                     {item.label}
                     <ChevronDown className="size-4" aria-hidden="true" />
-                  </Button>
+                  </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="start"
-                  className="min-w-64 rounded-md border-white/10 bg-atf-black p-2 text-white shadow-xl"
+                  className="min-w-64 rounded-none border-atf-gray-200 bg-white p-2 text-atf-ink shadow-xl"
                 >
                   {item.children.map((child) => (
                     <DropdownMenuItem
                       key={child.to}
                       asChild
-                      className="rounded-md focus:bg-white/10 focus:text-white"
+                      className="rounded-none focus:bg-atf-gray-100 focus:text-atf-black"
                     >
                       <SmartLink
                         to={child.to}
-                        className="block cursor-pointer px-3 py-2 text-sm text-white/75 hover:text-white"
+                        className="block cursor-pointer px-3 py-2 text-sm text-atf-gray-700 hover:text-atf-black"
                       >
                         {child.label}
                       </SmartLink>
@@ -170,7 +166,7 @@ export function Navbar() {
               <SmartLink
                 key={item.to}
                 to={item.to}
-                className="rounded-md px-3 py-2 font-display text-xs font-bold uppercase text-white/75 hover:bg-white/10 hover:text-white"
+                className="px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-atf-black"
               >
                 {item.label}
               </SmartLink>
@@ -179,18 +175,26 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            to="/consulting"
-            className="hidden rounded-md border border-white/20 px-4 py-2 font-display text-xs font-bold uppercase text-white/80 transition-colors hover:border-white/60 hover:text-white lg:inline-flex"
+          <OpportunityLink
+            href="/consulting"
+            variant="outline"
+            size="sm"
+            corner={false}
+            className="hidden lg:inline-flex"
           >
             Partner With Us
-          </Link>
-          <Link to="/challenge" className="hidden atf-button lg:inline-flex">
+          </OpportunityLink>
+          <OpportunityLink
+            href="/challenge"
+            variant="primary"
+            size="sm"
+            className="hidden lg:inline-flex"
+          >
             Join Challenge
-          </Link>
-          <button
-            type="button"
-            className="inline-flex size-10 items-center justify-center rounded-md text-white hover:bg-white/10 lg:hidden"
+          </OpportunityLink>
+          <IconButton
+            variant="ghost"
+            className="text-atf-ink lg:hidden"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((open) => !open)}
@@ -200,20 +204,20 @@ export function Navbar() {
             ) : (
               <Menu className="size-6" aria-hidden="true" />
             )}
-          </button>
+          </IconButton>
         </div>
       </div>
 
       {mobileOpen ? (
         <nav
           aria-label="Mobile"
-          className="border-t border-white/10 bg-atf-black px-6 py-6 lg:hidden"
+          className="border-t border-atf-gray-200 bg-white px-6 py-6 lg:hidden"
         >
           <div className="flex flex-col gap-1">
             {navItems.map((item) =>
               item.children ? (
-                <div key={item.label} className="border-b border-white/10 py-3">
-                  <p className="mb-3 font-display text-xs font-bold uppercase text-white/40">
+                <div key={item.label} className="border-b border-atf-gray-200 py-3">
+                  <p className="mb-3 font-display text-xs font-bold uppercase text-atf-gray-500">
                     {item.label}
                   </p>
                   <div className="grid gap-2">
@@ -222,7 +226,7 @@ export function Navbar() {
                         key={child.to}
                         to={child.to}
                         onClick={closeMobile}
-                        className="py-2 font-display text-base font-bold uppercase text-white hover:text-atf-red-bright"
+                        className="py-2 font-display text-base font-bold uppercase text-atf-ink hover:text-primary"
                       >
                         {child.label}
                       </SmartLink>
@@ -234,7 +238,7 @@ export function Navbar() {
                   key={item.to}
                   to={item.to}
                   onClick={closeMobile}
-                  className="border-b border-white/10 py-4 font-display text-base font-bold uppercase text-white hover:text-atf-red-bright"
+                  className="border-b border-atf-gray-200 py-4 font-display text-base font-bold uppercase text-atf-ink hover:text-primary"
                 >
                   {item.label}
                 </SmartLink>
@@ -242,22 +246,21 @@ export function Navbar() {
             )}
           </div>
           <div className="mt-6 grid gap-3">
-            <Link
-              to="/consulting"
+            <OpportunityLink
+              href="/consulting"
+              variant="outline"
+              corner={false}
               onClick={closeMobile}
-              className="atf-button-outline atf-button-outline-light"
             >
               Partner With ATF
-            </Link>
-            <a
+            </OpportunityLink>
+            <OpportunityLink
               href="https://bit.ly/atf-wf"
-              target="_blank"
-              rel="noreferrer"
-              className="atf-button"
+              variant="primary"
               onClick={closeMobile}
             >
               Apply to Challenge
-            </a>
+            </OpportunityLink>
           </div>
         </nav>
       ) : null}

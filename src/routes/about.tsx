@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen, Eye, Heart } from "lucide-react";
 
-import { ActionCard, ContentBand, PageHero, PageShell, StatGrid } from "@/components/site/Page";
+import { ActionCard, ContentBand, StatGrid, SubpageTemplate } from "@/components/site/Page";
 
 export const Route = createFileRoute("/about")({
   component: AboutPage,
@@ -30,12 +30,14 @@ const values = [
 
 function AboutPage() {
   return (
-    <PageShell>
-      <PageHero
-        eyebrow="Who We Are"
-        title="Our Mission, Vision and Story"
-        description="African Technology Forum is a pan-African institution dedicated to harnessing technology for Africa's development challenges."
-      />
+    <SubpageTemplate
+      hero={{
+        eyebrow: "Who We Are",
+        title: "Our Mission, Vision and Story",
+        description:
+          "African Technology Forum is a pan-African institution dedicated to harnessing technology for Africa's development challenges.",
+      }}
+    >
       <ContentBand>
         <div className="grid gap-6 md:grid-cols-3">
           {values.map((item) => (
@@ -69,6 +71,6 @@ function AboutPage() {
           />
         </div>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }

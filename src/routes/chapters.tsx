@@ -2,7 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Building, Globe, MapPin, Users } from "lucide-react";
 
 import { AppLink } from "@/components/site/AppLink";
-import { ActionCard, ContentBand, PageHero, PageShell } from "@/components/site/Page";
+import {
+  ActionCard,
+  ContentBand,
+  OpportunityLink,
+  SubpageTemplate,
+} from "@/components/site/Page";
 import { chapters } from "@/lib/site-data";
 
 export const Route = createFileRoute("/chapters")({
@@ -11,22 +16,25 @@ export const Route = createFileRoute("/chapters")({
 
 function ChaptersPage() {
   return (
-    <PageShell muted>
-      <PageHero
-        eyebrow="Where We Work"
-        title="ATF Chapters"
-        icon={MapPin}
-        description="A growing network of chapters across Africa fostering local technology communities, capacity building, and professional development."
-      />
+    <SubpageTemplate
+      muted
+      hero={{
+        eyebrow: "Where We Work",
+        title: "ATF Chapters",
+        icon: MapPin,
+        description:
+          "A growing network of chapters across Africa fostering local technology communities, capacity building, and professional development.",
+      }}
+    >
       <ContentBand>
-        <div className="grid gap-px overflow-hidden rounded-md bg-atf-gray-200 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-px bg-atf-gray-200 md:grid-cols-2 lg:grid-cols-4">
           {chapters.map((chapter) => (
             <AppLink
               key={chapter.slug}
               href={`/countries/${chapter.slug}`}
               className="group bg-white p-7 transition-colors hover:bg-atf-gray-50"
             >
-              <div className="inline-flex size-12 items-center justify-center rounded-md bg-primary text-sm font-black text-white">
+              <div className="inline-flex size-12 items-center justify-center bg-primary text-sm font-black text-white">
                 {chapter.code}
               </div>
               <h2 className="mt-6 font-display text-xl font-black uppercase text-atf-black">
@@ -71,11 +79,14 @@ function ChaptersPage() {
               broader pan-African network.
             </p>
           </div>
-          <AppLink href="mailto:info@atfglobal.org" className="atf-button justify-self-start lg:justify-self-end">
+          <OpportunityLink
+            href="mailto:info@atfglobal.org"
+            className="justify-self-start lg:justify-self-end"
+          >
             Apply to Start a Chapter
-          </AppLink>
+          </OpportunityLink>
         </div>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }

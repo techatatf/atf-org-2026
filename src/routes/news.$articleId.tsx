@@ -2,7 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Bookmark, Calendar, Share2 } from "lucide-react";
 
 import { AppLink } from "@/components/site/AppLink";
-import { ContentBand, EmptyState, PageHero, PageShell } from "@/components/site/Page";
+import {
+  ContentBand,
+  EmptyState,
+  IconButton,
+  SubpageTemplate,
+} from "@/components/site/Page";
 import { newsItems } from "@/lib/site-data";
 
 export const Route = createFileRoute("/news/$articleId")({
@@ -25,12 +30,13 @@ function NewsArticlePage() {
   }
 
   return (
-    <PageShell>
-      <PageHero
-        eyebrow={article.category}
-        title={article.title}
-        description={article.excerpt}
-      />
+    <SubpageTemplate
+      hero={{
+        eyebrow: article.category,
+        title: article.title,
+        description: article.excerpt,
+      }}
+    >
       <ContentBand>
         <article className="mx-auto max-w-3xl">
           <div className="mb-10 flex flex-wrap items-center gap-4 border-b border-atf-gray-200 pb-8 text-sm text-atf-gray-500">
@@ -39,20 +45,16 @@ function NewsArticlePage() {
               {article.date}
             </span>
             <div className="ml-auto flex gap-2">
-              <button
-                type="button"
-                className="inline-flex size-10 items-center justify-center rounded-md border border-atf-gray-200 text-atf-gray-500 hover:border-primary hover:text-primary"
+              <IconButton
                 aria-label="Share article"
               >
                 <Share2 className="size-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="inline-flex size-10 items-center justify-center rounded-md border border-atf-gray-200 text-atf-gray-500 hover:border-primary hover:text-primary"
+              </IconButton>
+              <IconButton
                 aria-label="Bookmark article"
               >
                 <Bookmark className="size-5" aria-hidden="true" />
-              </button>
+              </IconButton>
             </div>
           </div>
 
@@ -70,6 +72,6 @@ function NewsArticlePage() {
           </AppLink>
         </article>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }

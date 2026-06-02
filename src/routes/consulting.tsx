@@ -1,8 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Briefcase, CheckCircle, Target, Users } from "lucide-react";
 
-import { AppLink } from "@/components/site/AppLink";
-import { ActionCard, ContentBand, PageHero, PageShell } from "@/components/site/Page";
+import {
+  ActionCard,
+  ContentBand,
+  OpportunityLink,
+  SubpageTemplate,
+  SurfaceCard,
+} from "@/components/site/Page";
 
 export const Route = createFileRoute("/consulting")({
   component: ConsultingPage,
@@ -17,13 +22,16 @@ const services = [
 
 function ConsultingPage() {
   return (
-    <PageShell muted>
-      <PageHero
-        eyebrow="What We Do"
-        title="ATF Consulting"
-        icon={Briefcase}
-        description="Strategic technology consulting for governments, NGOs, enterprises, and development partners driving digital transformation across Africa."
-      />
+    <SubpageTemplate
+      muted
+      hero={{
+        eyebrow: "What We Do",
+        title: "ATF Consulting",
+        icon: Briefcase,
+        description:
+          "Strategic technology consulting for governments, NGOs, enterprises, and development partners driving digital transformation across Africa.",
+      }}
+    >
       <ContentBand>
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1fr]">
           <div>
@@ -33,12 +41,12 @@ function ConsultingPage() {
               fluency, and a network of practitioners who can support delivery
               beyond the strategy document.
             </p>
-            <AppLink href="mailto:info@atfglobal.org" className="atf-button mt-8">
+            <OpportunityLink href="mailto:info@atfglobal.org" className="mt-8">
               Start a partnership inquiry
               <ArrowRight className="size-4" aria-hidden="true" />
-            </AppLink>
+            </OpportunityLink>
           </div>
-          <div className="rounded-md border border-atf-gray-200 bg-white p-6">
+          <SurfaceCard hover={false}>
             <h3 className="font-display text-xl font-black uppercase text-atf-black">
               Core Services
             </h3>
@@ -50,7 +58,7 @@ function ConsultingPage() {
                 </li>
               ))}
             </ul>
-          </div>
+          </SurfaceCard>
         </div>
       </ContentBand>
       <ContentBand muted>
@@ -67,6 +75,6 @@ function ConsultingPage() {
           />
         </div>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }

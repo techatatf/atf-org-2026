@@ -1,7 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen, Download, ExternalLink } from "lucide-react";
 
-import { ContentBand, PageHero, PageShell } from "@/components/site/Page";
+import {
+  ContentBand,
+  IconButton,
+  SubpageTemplate,
+  SurfaceCard,
+} from "@/components/site/Page";
 import { researchPapers } from "@/lib/site-data";
 
 export const Route = createFileRoute("/research")({
@@ -10,19 +15,23 @@ export const Route = createFileRoute("/research")({
 
 function ResearchPage() {
   return (
-    <PageShell muted>
-      <PageHero
-        eyebrow="Publications"
-        title="Research Papers"
-        icon={BookOpen}
-        description="In-depth research and analysis on technology trends, opportunities, and challenges across the African continent."
-      />
+    <SubpageTemplate
+      muted
+      hero={{
+        eyebrow: "Publications",
+        title: "Research Papers",
+        icon: BookOpen,
+        description:
+          "In-depth research and analysis on technology trends, opportunities, and challenges across the African continent.",
+      }}
+    >
       <ContentBand>
         <div className="grid gap-4">
           {researchPapers.map((paper) => (
-            <article
+            <SurfaceCard
               key={paper.title}
-              className="flex flex-col gap-5 rounded-md border border-atf-gray-200 bg-white p-6 md:flex-row md:items-center md:justify-between"
+              className="flex flex-col gap-5 p-6 md:flex-row md:items-center md:justify-between"
+              hover={false}
             >
               <div>
                 <p className="font-display text-xs font-bold uppercase text-primary">
@@ -36,25 +45,21 @@ function ResearchPage() {
                 </p>
               </div>
               <div className="flex gap-2">
-                <button
-                  type="button"
-                  className="inline-flex size-10 items-center justify-center rounded-md border border-atf-gray-200 text-atf-gray-500 hover:border-primary hover:text-primary"
+                <IconButton
                   aria-label={`Download ${paper.title}`}
                 >
                   <Download className="size-5" aria-hidden="true" />
-                </button>
-                <button
-                  type="button"
-                  className="inline-flex size-10 items-center justify-center rounded-md border border-atf-gray-200 text-atf-gray-500 hover:border-primary hover:text-primary"
+                </IconButton>
+                <IconButton
                   aria-label={`Open ${paper.title}`}
                 >
                   <ExternalLink className="size-5" aria-hidden="true" />
-                </button>
+                </IconButton>
               </div>
-            </article>
+            </SurfaceCard>
           ))}
         </div>
       </ContentBand>
-    </PageShell>
+    </SubpageTemplate>
   );
 }
