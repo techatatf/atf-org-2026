@@ -21,6 +21,28 @@ describe("ChallengeAnnouncementBanner", () => {
     expect(newLink.getAttribute("data-density")).toBe("compact");
   });
 
+  it("drops the mobile description before hiding the action", () => {
+    render(<ChallengeAnnouncementBanner />);
+
+    const title = screen.getByText("ATF Challenge 2026 is open");
+    const body = screen.getByText(
+      "- free AI training and mentorship for young Africans. Applications close June 30.",
+    );
+    const action = screen.getByRole("link", { name: "Apply now" });
+    const copy = title.closest("p");
+
+    expect(copy?.classList.contains("flex")).toBe(true);
+    expect(copy?.classList.contains("min-w-0")).toBe(true);
+    expect(title.classList.contains("whitespace-nowrap")).toBe(true);
+    expect(title.classList.contains("truncate")).toBe(true);
+    expect(body.classList.contains("truncate")).toBe(true);
+    expect(body.classList.contains("min-w-0")).toBe(true);
+    expect(body.classList.contains("hidden")).toBe(true);
+    expect(body.classList.contains("sm:block")).toBe(true);
+    expect(action.classList.contains("inline-flex")).toBe(true);
+    expect(action.classList.contains("hidden")).toBe(false);
+  });
+
   it("can be dismissed", () => {
     render(<ChallengeAnnouncementBanner />);
 

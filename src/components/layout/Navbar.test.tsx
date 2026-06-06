@@ -1,14 +1,37 @@
 /**
  * @vitest-environment jsdom
  */
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Navbar } from "@/components/layout/Navbar";
 
 afterEach(() => {
   cleanup();
+  document.documentElement.style.removeProperty("--atf-header-height");
+  vi.restoreAllMocks();
 });
+
+function rectWithHeight(height: number): DOMRect {
+  return {
+    bottom: height,
+    height,
+    left: 0,
+    right: 0,
+    top: 0,
+    width: 0,
+    x: 0,
+    y: 0,
+    toJSON: () => ({}),
+  };
+}
 
 vi.mock("@tanstack/react-router", () => ({
   Link: ({
@@ -100,9 +123,28 @@ describe("Navbar", () => {
     ).toBeNull();
     expect(mobileMenu.classList.contains("overflow-y-auto")).toBe(true);
     expect(mobileMenu.classList.contains("overscroll-contain")).toBe(true);
-    expect([...mobileMenu.classList].some((name) => name.startsWith("max-h-"))).toBe(
-      true,
+    expect(mobileMenu.classList.contains("atf-mobile-menu")).toBe(true);
+  });
+
+  it("writes measured header chrome height for viewport-aware layout", async () => {
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue(
+      rectWithHeight(126),
     );
+
+    render(<Navbar />);
+
+    await waitFor(() => {
+      expect(
+        document.documentElement.style.getPropertyValue("--atf-header-height"),
+      ).toBe("126px");
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Open menu" }));
+
+    const mobileMenu = screen.getByRole("navigation", { name: "Mobile" });
+
+    expect(mobileMenu.classList.contains("atf-mobile-menu")).toBe(true);
+    expect(mobileMenu.className).not.toContain("126px");
   });
 
   it("mirrors the section hierarchy in the mobile menu", () => {
@@ -137,7 +179,28 @@ describe("Navbar", () => {
       { label: "Research Papers", href: "/research" },
       { label: "Library", href: "/library" },
       { label: "Newsroom", href: "/news" },
-      { label: "Partner With ATF", href: "/consulting" },
+      { label: "Partner with Us", href: "/consulting" },
     ]);
+  });
+
+  it("uses the primary Opportunity Button for partner actions", () => {
+    render(<Navbar />);
+
+    const desktopPartner = screen.getByRole("link", {
+      name: "Partner with Us",
+    });
+
+    expect(desktopPartner.getAttribute("data-slot")).toBe("opportunity-button");
+    expect(desktopPartner.getAttribute("data-variant")).toBe("primary");
+
+    fireEvent.click(screen.getByRole("button", { name: "Open menu" }));
+
+    const mobileMenu = screen.getByRole("navigation", { name: "Mobile" });
+    const mobilePartner = within(mobileMenu).getByRole("link", {
+      name: "Partner with Us",
+    });
+
+    expect(mobilePartner.getAttribute("data-slot")).toBe("opportunity-button");
+    expect(mobilePartner.getAttribute("data-variant")).toBe("primary");
   });
 });

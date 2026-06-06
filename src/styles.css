@@ -232,6 +232,18 @@
     clip-path: polygon(54% 0, 100% 0, 100% 100%, 34% 100%);
   }
 
+  .atf-desktop-hero {
+    min-height: max(640px, calc(100dvh - var(--atf-header-height, 0px)));
+  }
+
+  .atf-desktop-hero-grid {
+    min-height: inherit;
+  }
+
+  .atf-mobile-menu {
+    max-height: calc(100dvh - var(--atf-header-height, 0px));
+  }
+
   .atf-opportunity-button {
     border: 0;
     border-radius: 0;

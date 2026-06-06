@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
@@ -92,92 +92,125 @@ function SmartLink({
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const headerChromeRef = useRef<HTMLDivElement>(null);
 
   const closeMobile = () => setMobileOpen(false);
 
+  useEffect(() => {
+    const headerChrome = headerChromeRef.current;
+
+    if (typeof document === "undefined" || !headerChrome) return;
+
+    const root = document.documentElement;
+    const syncHeaderHeight = () => {
+      root.style.setProperty(
+        "--atf-header-height",
+        `${headerChrome.getBoundingClientRect().height}px`,
+      );
+    };
+
+    syncHeaderHeight();
+
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(syncHeaderHeight);
+
+    resizeObserver?.observe(headerChrome);
+    window.addEventListener("resize", syncHeaderHeight);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", syncHeaderHeight);
+      root.style.removeProperty("--atf-header-height");
+    };
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 border-b border-atf-gray-200 bg-white text-atf-ink shadow-sm">
-      <ChallengeAnnouncementBanner />
+      <div ref={headerChromeRef}>
+        <ChallengeAnnouncementBanner />
 
-      <div className="atf-container flex h-20 items-center justify-between gap-6">
-        <Link to="/" className="inline-flex items-center">
-          <SiteLogo variant="fullColor" className="h-10 max-w-[220px]" />
-        </Link>
+        <div className="atf-container flex h-20 items-center justify-between gap-6">
+          <Link to="/" className="inline-flex items-center">
+            <SiteLogo variant="fullColor" className="h-10 max-w-[220px]" />
+          </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
-          {navItems.map((item) =>
-            item.children ? (
-              <DropdownMenu key={item.label} modal={false}>
-                <DropdownMenuTrigger asChild>
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-1 px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-atf-black"
-                  >
-                    {item.label}
-                    <ChevronDown className="size-4" aria-hidden="true" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="start"
-                  className="min-w-64 rounded-none border-atf-gray-200 bg-white p-2 text-atf-ink shadow-xl"
-                >
-                  {item.children.map((child) => (
-                    <DropdownMenuItem
-                      key={child.to}
-                      asChild
-                      className="rounded-none focus:bg-atf-gray-100 focus:text-atf-black"
+          <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+            {navItems.map((item) =>
+              item.children ? (
+                <DropdownMenu key={item.label} modal={false}>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-1 px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-atf-black"
                     >
-                      <SmartLink
-                        to={child.to}
-                        className="block cursor-pointer px-3 py-2 text-sm text-atf-gray-700 hover:text-atf-black"
+                      {item.label}
+                      <ChevronDown className="size-4" aria-hidden="true" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="start"
+                    className="min-w-64 rounded-none border-atf-gray-200 bg-white p-2 text-atf-ink shadow-xl"
+                  >
+                    {item.children.map((child) => (
+                      <DropdownMenuItem
+                        key={child.to}
+                        asChild
+                        className="rounded-none focus:bg-atf-gray-100 focus:text-atf-black"
                       >
-                        {child.label}
-                      </SmartLink>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <SmartLink
-                key={item.to}
-                to={item.to}
-                className="px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-atf-black"
-              >
-                {item.label}
-              </SmartLink>
-            ),
-          )}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <OpportunityButton
-            href="/consulting"
-            variant="outline"
-            size="sm"
-            className="hidden lg:inline-flex"
-          >
-            Partner With Us
-          </OpportunityButton>
-          <IconButton
-            variant="ghost"
-            className="text-atf-ink lg:hidden"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            onClick={() => setMobileOpen((open) => !open)}
-          >
-            {mobileOpen ? (
-              <X className="size-6" aria-hidden="true" />
-            ) : (
-              <Menu className="size-6" aria-hidden="true" />
+                        <SmartLink
+                          to={child.to}
+                          className="block cursor-pointer px-3 py-2 text-sm text-atf-gray-700 hover:text-atf-black"
+                        >
+                          {child.label}
+                        </SmartLink>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <SmartLink
+                  key={item.to}
+                  to={item.to}
+                  className="px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-atf-black"
+                >
+                  {item.label}
+                </SmartLink>
+              ),
             )}
-          </IconButton>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <OpportunityButton
+              href="/consulting"
+              variant="primary"
+              size="sm"
+              className="hidden lg:inline-flex"
+            >
+              Partner with Us
+            </OpportunityButton>
+            <IconButton
+              variant="ghost"
+              className="text-atf-ink lg:hidden"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen((open) => !open)}
+            >
+              {mobileOpen ? (
+                <X className="size-6" aria-hidden="true" />
+              ) : (
+                <Menu className="size-6" aria-hidden="true" />
+              )}
+            </IconButton>
+          </div>
         </div>
       </div>
 
       {mobileOpen ? (
         <nav
           aria-label="Mobile"
-          className="max-h-[calc(100dvh-126px)] overflow-y-auto overscroll-contain border-t border-atf-gray-200 bg-white px-6 py-6 lg:hidden"
+          className="atf-mobile-menu overflow-y-auto overscroll-contain border-t border-atf-gray-200 bg-white px-6 py-6 lg:hidden"
         >
           <div className="flex flex-col gap-1">
             {navItems.map((item) =>
@@ -214,10 +247,10 @@ export function Navbar() {
           <div className="mt-6 grid gap-3">
             <OpportunityButton
               href="/consulting"
-              variant="outline"
+              variant="primary"
               onClick={closeMobile}
             >
-              Partner With ATF
+              Partner with Us
             </OpportunityButton>
           </div>
         </nav>

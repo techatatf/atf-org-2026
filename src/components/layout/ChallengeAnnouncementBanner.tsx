@@ -18,7 +18,7 @@ export function ChallengeAnnouncementBanner() {
 
   return (
     <div className="relative border-b border-white/10 bg-atf-black text-white">
-      <div className="flex min-h-[46px] items-center justify-start gap-3 py-2 pl-4 pr-12 sm:justify-center sm:gap-[18px] sm:px-14 sm:py-0">
+      <div className="flex min-h-[46px] items-center justify-start gap-1 py-2 pl-4 pr-12 sm:gap-3 lg:justify-center lg:gap-[18px] lg:px-14 lg:py-0">
         <OpportunityButton
           href={announcement.href}
           variant="primary"
@@ -30,18 +30,22 @@ export function ChallengeAnnouncementBanner() {
         >
           {announcement.label}
         </OpportunityButton>
-        <p className="hidden text-[13.5px] leading-5 text-white/80 sm:block">
-          <strong className="font-semibold text-white">{announcement.title}</strong>{" "}
-          - {announcement.body}
+        <p className="flex min-w-0 flex-1 items-baseline gap-1.5 text-[10.5px] leading-5 text-white/80 sm:text-[13px] lg:flex-none lg:text-[13.5px]">
+          <strong className="min-w-0 truncate whitespace-nowrap font-semibold text-white sm:shrink-0">
+            {announcement.title}
+          </strong>
+          <span className="hidden min-w-0 truncate sm:block">
+            - {announcement.body}
+          </span>
         </p>
         <a
           href={announcement.href}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex shrink-0 items-center gap-1.5 border-b-2 border-primary pb-0.5 font-display text-[11px] font-bold uppercase text-white transition-colors hover:text-atf-red-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-atf-black"
+          className="inline-flex shrink-0 items-center gap-1.5 border-b-2 border-primary pb-0.5 font-display text-[9.5px] font-bold uppercase text-white transition-colors hover:text-atf-red-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-atf-black sm:text-[11px]"
         >
           {announcement.action}
-          <ArrowRight className="size-3.5" aria-hidden="true" />
+          <ArrowRight className="hidden size-3.5 sm:block" aria-hidden="true" />
         </a>
       </div>
       <button

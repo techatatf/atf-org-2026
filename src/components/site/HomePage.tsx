@@ -29,7 +29,31 @@ const programIcons = {
   chapters: Network,
 } as const;
 
-const newsCategories = ["All", "Press", "Programs", "Research", "Partnerships", "Chapters"];
+const newsCategories = [
+  "All",
+  "Press",
+  "Programs",
+  "Research",
+  "Partnerships",
+  "Chapters",
+];
+
+const heroContent = {
+  eyebrow: "Established 1987 - Pan-African Science & Technology Network",
+  headlineLead: "Promoting the development of",
+  headlineEmphasis: "science & technology",
+  headlineTail: "across Africa.",
+  body: "For over three decades, the African Technology Forum has partnered with governments, institutions, and enterprises to build Africa's scientific and technological capacity.",
+  ctas: [
+    { href: "/consulting", label: "Partner With ATF" },
+    { href: "/about", label: "Our Impact" },
+  ],
+  stats: [
+    { value: "54", label: "Countries" },
+    { value: "200+", label: "Programs" },
+    { value: "10K+", label: "Members" },
+  ],
+} as const;
 
 export function HomePage() {
   const [videoOpen, setVideoOpen] = useState(false);
@@ -75,7 +99,29 @@ function HeroSection({
   onVideoOpen: (open: boolean) => void;
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-atf-black">
+    <>
+      <DesktopHero videoOpen={videoOpen} onVideoOpen={onVideoOpen} />
+      <CompactHero
+        videoOpen={videoOpen}
+        onVideoOpen={onVideoOpen}
+        tone="light"
+      />
+    </>
+  );
+}
+
+function DesktopHero({
+  videoOpen,
+  onVideoOpen,
+}: {
+  videoOpen: boolean;
+  onVideoOpen: (open: boolean) => void;
+}) {
+  return (
+    <section
+      aria-label="ATF desktop hero"
+      className="atf-desktop-hero relative isolate hidden overflow-hidden bg-atf-black lg:block"
+    >
       <div className="absolute inset-0 z-0">
         <img
           src="/atf-assets/v2/hero-person.jpg"
@@ -84,7 +130,7 @@ function HeroSection({
         />
       </div>
       <div
-        className="absolute inset-0 z-10 hidden bg-primary lg:block"
+        className="absolute -inset-px z-10 hidden bg-primary lg:block"
         style={{ clipPath: "polygon(54% 0%, 100% 0%, 100% 100%, 34% 100%)" }}
         aria-hidden="true"
       />
@@ -93,49 +139,45 @@ function HeroSection({
         aria-hidden="true"
       />
 
-      <div className="relative z-20 grid lg:min-h-[760px] lg:grid-cols-[55%_45%]">
-        <div className="relative min-h-[280px] sm:min-h-[340px] lg:min-h-0">
+      <div className="atf-desktop-hero-grid relative z-20 grid lg:grid-cols-[55%_45%]">
+        <div className="relative">
           <HeroPlayButton onClick={() => onVideoOpen(true)} />
         </div>
 
-        <div className="flex items-center bg-primary px-6 py-10 text-white md:px-10 md:py-14 lg:bg-transparent lg:px-16 lg:py-16">
+        <div className="flex items-center bg-transparent px-16 py-16 text-white">
           <div className="max-w-xl lg:ml-8">
             <p className="mb-6 flex items-center gap-3 font-display text-xs font-bold uppercase text-white/85">
               <span className="h-px w-7 bg-white" aria-hidden="true" />
-              Established 1987 - Pan-African Science & Technology Network
+              {heroContent.eyebrow}
             </p>
-            <h1 className="font-display text-3xl font-black uppercase leading-none md:text-5xl 2xl:text-6xl">
-              Promoting the development of{" "}
-              <span className="text-white/85 italic">science & technology</span>{" "}
-              across Africa.
+            <h1 className="font-display text-5xl font-black uppercase leading-none 2xl:text-6xl">
+              {heroContent.headlineLead}{" "}
+              <span className="text-white/85 italic">
+                {heroContent.headlineEmphasis}
+              </span>{" "}
+              {heroContent.headlineTail}
             </h1>
             <p className="mt-6 text-base leading-8 text-white/90">
-              For over three decades, the African Technology Forum has
-              partnered with governments, institutions, and enterprises to
-              build Africa's scientific and technological capacity.
+              {heroContent.body}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <OpportunityButton
-                href="/consulting"
+                href={heroContent.ctas[0].href}
                 variant="inverse"
                 size="lg"
               >
-                Partner With ATF
+                {heroContent.ctas[0].label}
               </OpportunityButton>
               <OpportunityButton
-                href="/about"
+                href={heroContent.ctas[1].href}
                 variant="inverseOutline"
                 size="lg"
               >
-                Our Impact
+                {heroContent.ctas[1].label}
               </OpportunityButton>
             </div>
-            <div className="mt-10 hidden grid-cols-3 gap-4 border-t border-white/20 pt-6 sm:grid">
-              {[
-                { value: "54", label: "Countries" },
-                { value: "200+", label: "Programs" },
-                { value: "10K+", label: "Members" },
-              ].map((stat) => (
+            <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/20 pt-6">
+              {heroContent.stats.map((stat) => (
                 <div key={stat.label}>
                   <div className="font-display text-3xl font-black">
                     {stat.value}
@@ -151,45 +193,187 @@ function HeroSection({
       </div>
 
       {videoOpen ? (
-        <div className="absolute inset-0 z-40 flex items-center justify-center bg-atf-black/95 p-6">
-          <div className="relative w-full max-w-3xl border border-white/15 bg-white/5 p-10 text-center text-white">
-            <IconButton
-              variant="dark"
-              className="absolute right-4 top-4"
-              aria-label="Close video"
-              onClick={() => onVideoOpen(false)}
-            >
-              <X className="size-5" aria-hidden="true" />
-            </IconButton>
-            <div className="mx-auto mb-5 inline-flex size-16 items-center justify-center rounded-full border border-white/30">
-              <Play className="ml-1 size-7 fill-current" aria-hidden="true" />
-            </div>
-            <h2 className="font-display text-xl font-black uppercase">
-              Feature Video
-            </h2>
-            <p className="mt-3 text-sm leading-7 text-white/60">
-              ATF's feature film is being prepared for publication.
-            </p>
-          </div>
-        </div>
+        <HeroVideoOverlay
+          className="absolute inset-0 z-40"
+          onClose={() => onVideoOpen(false)}
+        />
       ) : null}
     </section>
   );
 }
 
-function HeroPlayButton({ onClick }: { onClick: () => void }) {
+type CompactHeroTone = "light" | "dark" | "brand";
+
+const compactHeroToneClasses: Record<CompactHeroTone, string> = {
+  light: "bg-atf-gray-50 text-atf-ink",
+  dark: "bg-atf-black text-white",
+  brand: "bg-primary text-white",
+};
+
+const compactHeroPanelToneClasses: Record<CompactHeroTone, string> = {
+  light: "bg-white text-atf-ink",
+  dark: "bg-atf-black text-white",
+  brand: "bg-white text-atf-ink",
+};
+
+function CompactHero({
+  videoOpen,
+  onVideoOpen,
+  tone = "light",
+}: {
+  videoOpen: boolean;
+  onVideoOpen: (open: boolean) => void;
+  tone?: CompactHeroTone;
+}) {
+  return (
+    <section
+      aria-label="ATF compact hero"
+      className={cn(
+        "relative isolate overflow-hidden lg:hidden",
+        compactHeroToneClasses[tone],
+      )}
+      data-tone={tone}
+    >
+      <div className="atf-compact-hero-media relative h-[54dvh] min-h-[360px] max-h-[560px] overflow-hidden bg-atf-black">
+        <img
+          src="/atf-assets/v2/hero-person.jpg"
+          alt="Young African technologist working at a computer"
+          className="absolute inset-0 size-full object-cover object-[24%_18%]"
+        />
+        <div className="absolute inset-0 bg-atf-black/15" aria-hidden="true" />
+        <HeroPlayButton compact onClick={() => onVideoOpen(true)} />
+      </div>
+
+      <div
+        className={cn(
+          "atf-compact-hero-panel relative z-10 px-6 py-9 sm:px-8 sm:py-11",
+          compactHeroPanelToneClasses[tone],
+        )}
+      >
+        <div className="mx-auto max-w-2xl">
+          <p className="mb-5 flex items-center gap-3 font-display text-[11px] font-bold uppercase leading-5 text-primary">
+            <span className="h-px w-7 bg-primary" aria-hidden="true" />
+            {heroContent.eyebrow}
+          </p>
+          <h1 className="font-display text-3xl font-black uppercase leading-tight text-atf-black sm:text-4xl">
+            {heroContent.headlineLead}{" "}
+            <span className="text-primary italic">
+              {heroContent.headlineEmphasis}
+            </span>{" "}
+            {heroContent.headlineTail}
+          </h1>
+          <p className="mt-5 text-base leading-7 text-atf-gray-500">
+            {heroContent.body}
+          </p>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <OpportunityButton
+              href={heroContent.ctas[0].href}
+              variant="primary"
+              size="lg"
+              className="w-full sm:w-auto"
+            >
+              {heroContent.ctas[0].label}
+            </OpportunityButton>
+            <OpportunityButton
+              href={heroContent.ctas[1].href}
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto"
+            >
+              {heroContent.ctas[1].label}
+            </OpportunityButton>
+          </div>
+          <div className="mt-8 grid grid-cols-3 gap-3 border-t border-atf-gray-200 pt-5">
+            {heroContent.stats.map((stat) => (
+              <div key={stat.label} className="min-w-0">
+                <div className="font-display text-2xl font-black leading-none text-atf-black sm:text-3xl">
+                  {stat.value}
+                </div>
+                <div className="mt-2 break-words font-display text-[10px] font-bold uppercase leading-4 text-atf-gray-500">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {videoOpen ? (
+        <HeroVideoOverlay
+          className="fixed inset-0 z-[80]"
+          onClose={() => onVideoOpen(false)}
+        />
+      ) : null}
+    </section>
+  );
+}
+
+function HeroVideoOverlay({
+  className,
+  onClose,
+}: {
+  className?: string;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-center bg-atf-black/95 p-6",
+        className,
+      )}
+    >
+      <div className="relative w-full max-w-3xl border border-white/15 bg-white/5 p-10 text-center text-white">
+        <IconButton
+          variant="dark"
+          className="absolute right-4 top-4"
+          aria-label="Close video"
+          onClick={onClose}
+        >
+          <X className="size-5" aria-hidden="true" />
+        </IconButton>
+        <div className="mx-auto mb-5 inline-flex size-16 items-center justify-center rounded-full border border-white/30">
+          <Play className="ml-1 size-7 fill-current" aria-hidden="true" />
+        </div>
+        <h2 className="font-display text-xl font-black uppercase">
+          Feature Video
+        </h2>
+        <p className="mt-3 text-sm leading-7 text-white/60">
+          ATF's feature film is being prepared for publication.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function HeroPlayButton({
+  compact = false,
+  onClick,
+}: {
+  compact?: boolean;
+  onClick: () => void;
+}) {
   return (
     <button
       type="button"
-      className="group absolute bottom-8 left-6 z-30 flex items-center gap-4 p-3 pr-5 text-left text-white transition-transform hover:translate-y-[-2px] lg:bottom-12 lg:left-14"
+      className={cn(
+        "group absolute z-30 flex items-center text-left text-white transition-transform hover:translate-y-[-2px]",
+        compact
+          ? "bottom-6 left-5 gap-3 p-2 pr-4 sm:left-6"
+          : "bottom-12 left-14 gap-4 p-3 pr-5",
+      )}
       aria-label="Play ATF feature video"
       onClick={onClick}
     >
       <span
-        className="atf-hero-play-disc inline-flex size-[72px] items-center justify-center rounded-full bg-primary text-white shadow-[0_12px_40px_rgba(249,0,54,0.4)] transition-transform group-hover:scale-[1.06]"
+        className={cn(
+          "atf-hero-play-disc inline-flex items-center justify-center rounded-full bg-primary text-white shadow-[0_12px_40px_rgba(249,0,54,0.4)] transition-transform group-hover:scale-[1.06]",
+          compact ? "size-16" : "size-[72px]",
+        )}
         aria-hidden="true"
       >
-        <Play className="ml-1 size-7 fill-current" />
+        <Play
+          className={cn("ml-1 fill-current", compact ? "size-6" : "size-7")}
+        />
       </span>
       <span className="relative">
         <span className="block font-display text-xs font-black uppercase">
@@ -251,8 +435,9 @@ function AboutSection() {
         <div>
           <Eyebrow>Who We Are</Eyebrow>
           <h2 className="atf-section-title">
-            Three decades at the <span className="text-primary italic">forefront</span>{" "}
-            of African technology.
+            Three decades at the{" "}
+            <span className="text-primary italic">forefront</span> of African
+            technology.
           </h2>
           <p className="atf-body mt-7">
             The African Technology Forum is a pan-African institution dedicated
@@ -328,7 +513,10 @@ function ProgramsSection() {
               <div className="font-display text-xs font-bold text-atf-gray-500">
                 {program.index}
               </div>
-              <Icon className="mt-8 size-11 text-atf-black" aria-hidden="true" />
+              <Icon
+                className="mt-8 size-11 text-atf-black"
+                aria-hidden="true"
+              />
               <h3 className="mt-7 font-display text-2xl font-black uppercase leading-tight text-atf-black">
                 {program.title}
               </h3>
@@ -355,8 +543,8 @@ function FunderSection() {
         <div>
           <Eyebrow light>For Partners & Funders</Eyebrow>
           <h2 className="atf-section-title text-white">
-            Invest in Africa's <span className="text-primary italic">digital future</span>{" "}
-            with us.
+            Invest in Africa's{" "}
+            <span className="text-primary italic">digital future</span> with us.
           </h2>
           <p className="mt-6 text-base leading-8 text-white/60">
             ATF has a 30+ year track record of delivering measurable technology
@@ -467,17 +655,20 @@ function StudentSection() {
           For Students & Young Professionals
         </p>
         <h2 className="font-display text-5xl font-black uppercase leading-none md:text-7xl">
-          Don't just watch the AI revolution, <span className="italic">build it.</span>
+          Don't just watch the AI revolution,{" "}
+          <span className="italic">build it.</span>
         </h2>
         <ul className="mt-8 grid gap-3 font-display text-sm font-bold uppercase text-white/90">
-          {["Get free AI training", "Build real-world solutions", "Launch your career"].map(
-            (item) => (
-              <li key={item} className="flex items-center gap-3">
-                <TriangleBullet light />
-                {item}
-              </li>
-            ),
-          )}
+          {[
+            "Get free AI training",
+            "Build real-world solutions",
+            "Launch your career",
+          ].map((item) => (
+            <li key={item} className="flex items-center gap-3">
+              <TriangleBullet light />
+              {item}
+            </li>
+          ))}
         </ul>
         <div className="mt-8 flex flex-wrap gap-3">
           <OpportunityButton
@@ -610,8 +801,14 @@ function NewsSection({
 function PartnersSection() {
   return (
     <ContentBand muted>
-      <SurfaceCard hover={false} className="border-0 bg-transparent p-0 text-center">
-        <Globe2 className="mx-auto mb-5 size-10 text-primary" aria-hidden="true" />
+      <SurfaceCard
+        hover={false}
+        className="border-0 bg-transparent p-0 text-center"
+      >
+        <Globe2
+          className="mx-auto mb-5 size-10 text-primary"
+          aria-hidden="true"
+        />
         <p className="font-display text-xs font-bold uppercase text-atf-gray-500">
           Trusted by leading organizations across Africa and beyond
         </p>
