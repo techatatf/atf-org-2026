@@ -1,13 +1,9 @@
-import type {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  ComponentProps,
-  ReactNode,
-} from "react";
+import type { ButtonHTMLAttributes, ComponentProps, ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 
 import { AppLink } from "@/components/site/AppLink";
+import { OpportunityButton } from "@/components/site/OpportunityButton";
 import { cn } from "@/lib/utils";
 
 type LogoVariant = "fullColor" | "bright" | "dark";
@@ -31,115 +27,6 @@ export function SiteLogo({
       alt="African Technology Forum"
       className={cn("block h-9 w-auto object-contain", className)}
     />
-  );
-}
-
-type OpportunityButtonVariant =
-  | "primary"
-  | "secondary"
-  | "outline"
-  | "light"
-  | "lightOutline"
-  | "subtle";
-
-type OpportunityButtonSize = "sm" | "md" | "lg";
-
-const opportunityButtonVariants: Record<OpportunityButtonVariant, string> = {
-  primary: "border-primary bg-primary text-white hover:bg-atf-red-dark",
-  secondary: "border-atf-black bg-atf-black text-white hover:bg-atf-ink",
-  outline:
-    "border-atf-black bg-transparent text-atf-black hover:bg-atf-black hover:text-white",
-  light:
-    "border-white bg-white text-primary hover:bg-transparent hover:text-white",
-  lightOutline:
-    "border-white/70 bg-transparent text-white hover:border-white hover:bg-white hover:text-primary",
-  subtle:
-    "border-atf-red/10 bg-atf-red/10 text-primary hover:border-primary hover:bg-primary hover:text-white",
-};
-
-const opportunityButtonSizes: Record<OpportunityButtonSize, string> = {
-  sm: "h-8 px-3 text-[11px]",
-  md: "h-10 px-5 text-xs",
-  lg: "h-12 px-7 text-[13px]",
-};
-
-export function opportunityButtonClass({
-  variant = "primary",
-  size = "md",
-  corner,
-  className,
-}: {
-  variant?: OpportunityButtonVariant;
-  size?: OpportunityButtonSize;
-  corner?: boolean;
-  className?: string;
-}) {
-  const hasCorner =
-    corner ?? (variant === "primary" || variant === "secondary" || variant === "light");
-
-  return cn(
-    "atf-opportunity-button inline-flex items-center justify-center gap-2 whitespace-nowrap border font-display font-bold uppercase transition-colors",
-    opportunityButtonVariants[variant],
-    opportunityButtonSizes[size],
-    hasCorner && "atf-opportunity-button-corner",
-    variant === "primary" && "atf-opportunity-button-primary",
-    variant === "secondary" && "atf-opportunity-button-secondary",
-    variant === "light" && "atf-opportunity-button-light",
-    className,
-  );
-}
-
-type OpportunityLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  href: string;
-  children: ReactNode;
-  variant?: OpportunityButtonVariant;
-  size?: OpportunityButtonSize;
-  corner?: boolean;
-};
-
-export function OpportunityLink({
-  href,
-  children,
-  variant = "primary",
-  size = "md",
-  corner,
-  className,
-  ...props
-}: OpportunityLinkProps) {
-  return (
-    <AppLink
-      href={href}
-      className={opportunityButtonClass({ variant, size, corner, className })}
-      {...props}
-    >
-      {children}
-    </AppLink>
-  );
-}
-
-type OpportunityButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: OpportunityButtonVariant;
-  size?: OpportunityButtonSize;
-  corner?: boolean;
-};
-
-export function OpportunityButton({
-  children,
-  variant = "primary",
-  size = "md",
-  corner,
-  className,
-  type = "button",
-  ...props
-}: OpportunityButtonProps) {
-  return (
-    <button
-      type={type}
-      className={opportunityButtonClass({ variant, size, corner, className })}
-      {...props}
-    >
-      {children}
-    </button>
   );
 }
 
@@ -550,9 +437,9 @@ export function EmptyState({
             {title}
           </h1>
           <p className="mt-4 text-atf-gray-500">{description}</p>
-          <OpportunityLink href={href} className="mt-8">
+          <OpportunityButton href={href} className="mt-8">
             {action}
-          </OpportunityLink>
+          </OpportunityButton>
         </div>
       </div>
     </section>

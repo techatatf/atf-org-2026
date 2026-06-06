@@ -9,12 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhoWeAreRouteImport } from './routes/who-we-are'
+import { Route as WhereWeWorkRouteImport } from './routes/where-we-work'
+import { Route as WhatWeDoRouteImport } from './routes/what-we-do'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as PublicationsRouteImport } from './routes/publications'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as LibraryRouteImport } from './routes/library'
 import { Route as ConsultingRouteImport } from './routes/consulting'
 import { Route as ChaptersRouteImport } from './routes/chapters'
 import { Route as ChallengeRouteImport } from './routes/challenge'
@@ -24,6 +28,21 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsArticleIdRouteImport } from './routes/news.$articleId'
 import { Route as CountriesCountryRouteImport } from './routes/countries.$country'
 
+const WhoWeAreRoute = WhoWeAreRouteImport.update({
+  id: '/who-we-are',
+  path: '/who-we-are',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhereWeWorkRoute = WhereWeWorkRouteImport.update({
+  id: '/where-we-work',
+  path: '/where-we-work',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhatWeDoRoute = WhatWeDoRouteImport.update({
+  id: '/what-we-do',
+  path: '/what-we-do',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
   id: '/terms-of-service',
   path: '/terms-of-service',
@@ -52,6 +71,11 @@ const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConsultingRoute = ConsultingRouteImport.update({
@@ -102,12 +126,16 @@ export interface FileRoutesByFullPath {
   '/challenge': typeof ChallengeRoute
   '/chapters': typeof ChaptersRoute
   '/consulting': typeof ConsultingRoute
+  '/library': typeof LibraryRoute
   '/news': typeof NewsRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/publications': typeof PublicationsRoute
   '/research': typeof ResearchRoute
   '/team': typeof TeamRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/what-we-do': typeof WhatWeDoRoute
+  '/where-we-work': typeof WhereWeWorkRoute
+  '/who-we-are': typeof WhoWeAreRoute
   '/countries/$country': typeof CountriesCountryRoute
   '/news/$articleId': typeof NewsArticleIdRoute
 }
@@ -118,12 +146,16 @@ export interface FileRoutesByTo {
   '/challenge': typeof ChallengeRoute
   '/chapters': typeof ChaptersRoute
   '/consulting': typeof ConsultingRoute
+  '/library': typeof LibraryRoute
   '/news': typeof NewsRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/publications': typeof PublicationsRoute
   '/research': typeof ResearchRoute
   '/team': typeof TeamRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/what-we-do': typeof WhatWeDoRoute
+  '/where-we-work': typeof WhereWeWorkRoute
+  '/who-we-are': typeof WhoWeAreRoute
   '/countries/$country': typeof CountriesCountryRoute
   '/news/$articleId': typeof NewsArticleIdRoute
 }
@@ -135,12 +167,16 @@ export interface FileRoutesById {
   '/challenge': typeof ChallengeRoute
   '/chapters': typeof ChaptersRoute
   '/consulting': typeof ConsultingRoute
+  '/library': typeof LibraryRoute
   '/news': typeof NewsRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/publications': typeof PublicationsRoute
   '/research': typeof ResearchRoute
   '/team': typeof TeamRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/what-we-do': typeof WhatWeDoRoute
+  '/where-we-work': typeof WhereWeWorkRoute
+  '/who-we-are': typeof WhoWeAreRoute
   '/countries/$country': typeof CountriesCountryRoute
   '/news/$articleId': typeof NewsArticleIdRoute
 }
@@ -153,12 +189,16 @@ export interface FileRouteTypes {
     | '/challenge'
     | '/chapters'
     | '/consulting'
+    | '/library'
     | '/news'
     | '/privacy-policy'
     | '/publications'
     | '/research'
     | '/team'
     | '/terms-of-service'
+    | '/what-we-do'
+    | '/where-we-work'
+    | '/who-we-are'
     | '/countries/$country'
     | '/news/$articleId'
   fileRoutesByTo: FileRoutesByTo
@@ -169,12 +209,16 @@ export interface FileRouteTypes {
     | '/challenge'
     | '/chapters'
     | '/consulting'
+    | '/library'
     | '/news'
     | '/privacy-policy'
     | '/publications'
     | '/research'
     | '/team'
     | '/terms-of-service'
+    | '/what-we-do'
+    | '/where-we-work'
+    | '/who-we-are'
     | '/countries/$country'
     | '/news/$articleId'
   id:
@@ -185,12 +229,16 @@ export interface FileRouteTypes {
     | '/challenge'
     | '/chapters'
     | '/consulting'
+    | '/library'
     | '/news'
     | '/privacy-policy'
     | '/publications'
     | '/research'
     | '/team'
     | '/terms-of-service'
+    | '/what-we-do'
+    | '/where-we-work'
+    | '/who-we-are'
     | '/countries/$country'
     | '/news/$articleId'
   fileRoutesById: FileRoutesById
@@ -202,17 +250,42 @@ export interface RootRouteChildren {
   ChallengeRoute: typeof ChallengeRoute
   ChaptersRoute: typeof ChaptersRoute
   ConsultingRoute: typeof ConsultingRoute
+  LibraryRoute: typeof LibraryRoute
   NewsRoute: typeof NewsRouteWithChildren
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   PublicationsRoute: typeof PublicationsRoute
   ResearchRoute: typeof ResearchRoute
   TeamRoute: typeof TeamRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
+  WhatWeDoRoute: typeof WhatWeDoRoute
+  WhereWeWorkRoute: typeof WhereWeWorkRoute
+  WhoWeAreRoute: typeof WhoWeAreRoute
   CountriesCountryRoute: typeof CountriesCountryRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/who-we-are': {
+      id: '/who-we-are'
+      path: '/who-we-are'
+      fullPath: '/who-we-are'
+      preLoaderRoute: typeof WhoWeAreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/where-we-work': {
+      id: '/where-we-work'
+      path: '/where-we-work'
+      fullPath: '/where-we-work'
+      preLoaderRoute: typeof WhereWeWorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/what-we-do': {
+      id: '/what-we-do'
+      path: '/what-we-do'
+      fullPath: '/what-we-do'
+      preLoaderRoute: typeof WhatWeDoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms-of-service': {
       id: '/terms-of-service'
       path: '/terms-of-service'
@@ -253,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/consulting': {
@@ -331,12 +411,16 @@ const rootRouteChildren: RootRouteChildren = {
   ChallengeRoute: ChallengeRoute,
   ChaptersRoute: ChaptersRoute,
   ConsultingRoute: ConsultingRoute,
+  LibraryRoute: LibraryRoute,
   NewsRoute: NewsRouteWithChildren,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   PublicationsRoute: PublicationsRoute,
   ResearchRoute: ResearchRoute,
   TeamRoute: TeamRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
+  WhatWeDoRoute: WhatWeDoRoute,
+  WhereWeWorkRoute: WhereWeWorkRoute,
+  WhoWeAreRoute: WhoWeAreRoute,
   CountriesCountryRoute: CountriesCountryRoute,
 }
 export const routeTree = rootRouteImport

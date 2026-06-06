@@ -228,67 +228,38 @@
     @apply inline-flex items-center gap-2 font-display text-xs font-bold uppercase text-atf-ink underline decoration-primary decoration-2 underline-offset-8 transition-colors hover:text-primary;
   }
 
-  .atf-button {
-    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden border border-primary bg-primary px-6 py-3 font-display text-xs font-bold uppercase text-white transition-colors hover:bg-atf-red-dark;
-    border-radius: 0;
-  }
-
-  .atf-button-light {
-    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden bg-white px-6 py-3 font-display text-xs font-bold uppercase text-primary transition-colors hover:bg-transparent hover:text-white;
-    border: 1.5px solid var(--atf-white);
-    border-radius: 0;
-  }
-
-  .atf-button-outline {
-    @apply inline-flex items-center justify-center gap-2 border px-6 py-3 font-display text-xs font-bold uppercase transition-colors;
-    border-radius: 0;
-  }
-
-  .atf-button-outline-light {
-    @apply border-white/70 text-white hover:bg-white hover:text-primary;
-  }
-
-  .atf-button-outline-dark {
-    @apply border-atf-black text-atf-black hover:bg-atf-black hover:text-white;
-  }
-
   .opportunity-cut {
     clip-path: polygon(54% 0, 100% 0, 100% 100%, 34% 100%);
   }
 
   .atf-opportunity-button {
+    border: 0;
     border-radius: 0;
+    box-shadow: inset 0 0 0 1px var(--opportunity-button-border-color, currentColor);
+    clip-path: var(--opportunity-button-shape);
+    isolation: isolate;
     letter-spacing: 0;
-    position: relative;
     overflow: hidden;
+    position: relative;
   }
 
-  .atf-opportunity-button-corner::after,
-  .atf-button::after,
-  .atf-button-light::after {
+  .atf-opportunity-button::after {
+    background: var(--opportunity-button-border-color, currentColor);
     content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-top: 10px solid var(--opportunity-corner-color, var(--atf-white));
-    border-left: 10px solid transparent;
+    height: 1px;
     pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: var(--opportunity-button-cut);
+    transform: rotate(45deg);
+    transform-origin: right center;
+    width: var(--opportunity-button-cut-line);
   }
 
-  .atf-opportunity-button-primary,
-  .atf-button {
-    --opportunity-corner-color: var(--atf-white);
-  }
-
-  .atf-opportunity-button-secondary {
-    --opportunity-corner-color: var(--atf-red);
-  }
-
-  .atf-opportunity-button-light,
-  .atf-button-light {
-    --opportunity-corner-color: var(--atf-red);
+  .atf-opportunity-button:focus-visible {
+    box-shadow:
+      inset 0 0 0 2px var(--atf-white),
+      inset 0 0 0 4px var(--atf-red);
   }
 
   .atf-hero-play-disc {

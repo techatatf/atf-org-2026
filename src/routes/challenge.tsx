@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Award, Calendar, Lightbulb, Trophy } from "lucide-react";
 
+import { OpportunityButton } from "@/components/site/OpportunityButton";
 import {
   ActionCard,
   ContentBand,
-  OpportunityLink,
   SubpageTemplate,
   SurfaceCard,
 } from "@/components/site/Page";
@@ -42,23 +42,22 @@ function ChallengePage() {
             education, climate, and financial inclusion.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <OpportunityLink
+            <OpportunityButton
               href="https://bit.ly/atf-wf"
-              variant="light"
+              variant="inverse"
               size="lg"
               target="_blank"
               rel="noreferrer"
             >
               Apply Now
-            </OpportunityLink>
-            <OpportunityLink
+            </OpportunityButton>
+            <OpportunityButton
               href="/chapters"
-              variant="lightOutline"
+              variant="inverseOutline"
               size="lg"
-              corner={false}
             >
               Join a Chapter
-            </OpportunityLink>
+            </OpportunityButton>
           </div>
         </div>
         <div className="relative min-h-[360px] bg-atf-black">

@@ -10,12 +10,12 @@ import {
 } from "lucide-react";
 
 import { AppLink } from "@/components/site/AppLink";
+import { OpportunityButton } from "@/components/site/OpportunityButton";
 import {
   ContentBand,
   Eyebrow,
   FilterChip,
   IconButton,
-  OpportunityLink,
   SectionHeader,
   SurfaceCard,
   TriangleBullet,
@@ -115,23 +115,20 @@ function HeroSection({
               build Africa's scientific and technological capacity.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <OpportunityLink
+              <OpportunityButton
                 href="/consulting"
-                variant="light"
-                size="md"
-                className="lg:h-12 lg:px-7"
+                variant="inverse"
+                size="lg"
               >
                 Partner With ATF
-              </OpportunityLink>
-              <OpportunityLink
+              </OpportunityButton>
+              <OpportunityButton
                 href="/about"
-                variant="lightOutline"
-                size="md"
-                corner={false}
-                className="lg:h-12 lg:px-7"
+                variant="inverseOutline"
+                size="lg"
               >
                 Our Impact
-              </OpportunityLink>
+              </OpportunityButton>
             </div>
             <div className="mt-10 hidden grid-cols-3 gap-4 border-t border-white/20 pt-6 sm:grid">
               {[
@@ -483,23 +480,22 @@ function StudentSection() {
           )}
         </ul>
         <div className="mt-8 flex flex-wrap gap-3">
-          <OpportunityLink
+          <OpportunityButton
             href="https://bit.ly/atf-wf"
-            variant="light"
+            variant="inverse"
             size="lg"
             target="_blank"
             rel="noreferrer"
           >
             Apply to ATF Challenge
-          </OpportunityLink>
-          <OpportunityLink
+          </OpportunityButton>
+          <OpportunityButton
             href="/chapters"
-            variant="lightOutline"
+            variant="inverseOutline"
             size="lg"
-            corner={false}
           >
             Join a Chapter
-          </OpportunityLink>
+          </OpportunityButton>
         </div>
       </div>
       <div className="relative min-h-[340px] bg-atf-black">

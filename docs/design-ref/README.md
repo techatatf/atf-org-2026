@@ -171,6 +171,13 @@ The angled cut creates a triangular red shape that "pushes" into the image — s
 - Links: underline on hover
 - Buttons: slight darkening, no scale transform
 
+### Opportunity Button
+- The **Opportunity Button** is the branded ATF call-to-action control. It is a real cut-corner trapezoid with a mandatory top-right cut, used for primary page, hero, navigation, and empty-state actions.
+- The cut is part of the control's shape, not a decorative corner accent. All variants use the same trapezoid geometry, and outline variants must trace the cut edge.
+- Use one reusable React module for both navigational and native-button actions. Provide a destination when the action navigates; omit it for an in-place action.
+- Variant names are semantic, not literal colors: `primary`, `secondary`, `outline`, `inverse`, and `inverseOutline`.
+- Size names are `sm`, `md`, and `lg`. Avoid custom height and padding overrides unless a layout has a documented reason to depart from the shared sizes.
+
 ### Borders & Shadows
 - Borders: 1px solid Gray 200 for cards/inputs
 - Focus ring: 2px solid `#F90036`

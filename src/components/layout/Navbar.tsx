@@ -3,7 +3,9 @@ import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
 
-import { IconButton, OpportunityLink, SiteLogo } from "@/components/site/Page";
+import { ChallengeAnnouncementBanner } from "@/components/layout/ChallengeAnnouncementBanner";
+import { OpportunityButton } from "@/components/site/OpportunityButton";
+import { IconButton, SiteLogo } from "@/components/site/Page";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +21,7 @@ const navItems: NavItem[] = [
   {
     label: "Who We Are",
     children: [
+      { label: "Overview", to: "/who-we-are" },
       { label: "Our Mission, Vision and Story", to: "/about" },
       { label: "The Team And Contributors", to: "/team" },
     ],
@@ -26,6 +29,7 @@ const navItems: NavItem[] = [
   {
     label: "What We Do",
     children: [
+      { label: "Overview", to: "/what-we-do" },
       { label: "ATF Consulting", to: "/consulting" },
       { label: "ATF Challenge", to: "/challenge" },
       { label: "ATF Chapters", to: "/chapters" },
@@ -34,6 +38,7 @@ const navItems: NavItem[] = [
   {
     label: "Where We Work",
     children: [
+      { label: "Overview", to: "/where-we-work" },
       { label: "Ghana", to: "/countries/ghana" },
       { label: "Nigeria", to: "/countries/nigeria" },
       { label: "Kenya", to: "/countries/kenya" },
@@ -43,9 +48,11 @@ const navItems: NavItem[] = [
   {
     label: "Publications",
     children: [
+      { label: "Overview", to: "/publications" },
+      { label: "Newsroom", to: "/news" },
       { label: "Articles", to: "/articles" },
       { label: "Research Papers", to: "/research" },
-      { label: "Library", to: "/publications" },
+      { label: "Library", to: "/library" },
     ],
   },
   { label: "Newsroom", to: "/news" },
@@ -84,45 +91,13 @@ function SmartLink({
 }
 
 export function Navbar() {
-  const [announcementVisible, setAnnouncementVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const closeMobile = () => setMobileOpen(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-atf-gray-200 bg-white text-atf-ink shadow-sm">
-      {announcementVisible ? (
-        <div className="border-b border-white/10 bg-atf-black text-white">
-          <div className="atf-container flex min-h-11 items-center gap-3 py-2 text-sm">
-            <span className="bg-primary px-2 py-1 font-display text-[10px] font-black uppercase">
-              New
-            </span>
-            <p className="hidden flex-1 text-white/75 sm:block">
-              <strong className="font-semibold text-white">
-                ATF Challenge 2026 is open
-              </strong>{" "}
-              - free AI training and mentorship for young Africans.
-              Applications close June 30.
-            </p>
-            <a
-              href="https://bit.ly/atf-wf"
-              target="_blank"
-              rel="noreferrer"
-              className="ml-auto font-display text-xs font-bold uppercase text-white underline decoration-primary decoration-2 underline-offset-4 hover:text-atf-red-bright"
-            >
-              Apply now
-            </a>
-            <IconButton
-              aria-label="Dismiss announcement"
-              variant="ghost"
-              className="size-8 text-white/55 hover:text-white"
-              onClick={() => setAnnouncementVisible(false)}
-            >
-              <X className="size-4" aria-hidden="true" />
-            </IconButton>
-          </div>
-        </div>
-      ) : null}
+      <ChallengeAnnouncementBanner />
 
       <div className="atf-container flex h-20 items-center justify-between gap-6">
         <Link to="/" className="inline-flex items-center">
@@ -175,23 +150,14 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <OpportunityLink
+          <OpportunityButton
             href="/consulting"
             variant="outline"
             size="sm"
-            corner={false}
             className="hidden lg:inline-flex"
           >
             Partner With Us
-          </OpportunityLink>
-          <OpportunityLink
-            href="/challenge"
-            variant="primary"
-            size="sm"
-            className="hidden lg:inline-flex"
-          >
-            Join Challenge
-          </OpportunityLink>
+          </OpportunityButton>
           <IconButton
             variant="ghost"
             className="text-atf-ink lg:hidden"
@@ -211,7 +177,7 @@ export function Navbar() {
       {mobileOpen ? (
         <nav
           aria-label="Mobile"
-          className="border-t border-atf-gray-200 bg-white px-6 py-6 lg:hidden"
+          className="max-h-[calc(100dvh-126px)] overflow-y-auto overscroll-contain border-t border-atf-gray-200 bg-white px-6 py-6 lg:hidden"
         >
           <div className="flex flex-col gap-1">
             {navItems.map((item) =>
@@ -246,21 +212,13 @@ export function Navbar() {
             )}
           </div>
           <div className="mt-6 grid gap-3">
-            <OpportunityLink
+            <OpportunityButton
               href="/consulting"
               variant="outline"
-              corner={false}
               onClick={closeMobile}
             >
               Partner With ATF
-            </OpportunityLink>
-            <OpportunityLink
-              href="https://bit.ly/atf-wf"
-              variant="primary"
-              onClick={closeMobile}
-            >
-              Apply to Challenge
-            </OpportunityLink>
+            </OpportunityButton>
           </div>
         </nav>
       ) : null}

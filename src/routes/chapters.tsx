@@ -2,10 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Building, Globe, MapPin, Users } from "lucide-react";
 
 import { AppLink } from "@/components/site/AppLink";
+import { OpportunityButton } from "@/components/site/OpportunityButton";
 import {
   ActionCard,
   ContentBand,
-  OpportunityLink,
   SubpageTemplate,
 } from "@/components/site/Page";
 import { chapters } from "@/lib/site-data";
@@ -79,12 +79,12 @@ function ChaptersPage() {
               broader pan-African network.
             </p>
           </div>
-          <OpportunityLink
+          <OpportunityButton
             href="mailto:info@atfglobal.org"
             className="justify-self-start lg:justify-self-end"
           >
             Apply to Start a Chapter
-          </OpportunityLink>
+          </OpportunityButton>
         </div>
       </ContentBand>
     </SubpageTemplate>

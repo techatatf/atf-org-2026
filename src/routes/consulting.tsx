@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Briefcase, CheckCircle, Target, Users } from "lucide-react";
 
+import { OpportunityButton } from "@/components/site/OpportunityButton";
 import {
   ActionCard,
   ContentBand,
-  OpportunityLink,
   SubpageTemplate,
   SurfaceCard,
 } from "@/components/site/Page";
@@ -41,10 +41,10 @@ function ConsultingPage() {
               fluency, and a network of practitioners who can support delivery
               beyond the strategy document.
             </p>
-            <OpportunityLink href="mailto:info@atfglobal.org" className="mt-8">
+            <OpportunityButton href="mailto:info@atfglobal.org" className="mt-8">
               Start a partnership inquiry
               <ArrowRight className="size-4" aria-hidden="true" />
-            </OpportunityLink>
+            </OpportunityButton>
           </div>
           <SurfaceCard hover={false}>
             <h3 className="font-display text-xl font-black uppercase text-atf-black">
