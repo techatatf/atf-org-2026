@@ -55,6 +55,28 @@ The npm scripts are also standard package scripts, so `npm run build` and
 `npm run test` invoke the same project commands if npm is the active package
 manager.
 
+## Running with pm2
+
+To keep the dev server running in the background, manage it with
+[pm2](https://pm2.keymetrics.io/). The instance is named after the repo
+(`atf-org-2026`), so every command targets it by that name. pm2 launches the
+`dev` npm script (`vite --port 3000 --host`), so dependencies must already be
+installed (`npm install`).
+
+```bash
+pm2 start npm --name atf-org-2026 -- run dev   # Start the dev server
+pm2 stop atf-org-2026                          # Stop it (keeps it in pm2's list)
+pm2 restart atf-org-2026                       # Restart it
+pm2 logs atf-org-2026                          # Tail vite output
+pm2 status                                     # List processes and their state
+pm2 delete atf-org-2026                        # Remove it from pm2 entirely
+```
+
+`stop` leaves a stopped entry in `pm2 status`, so `pm2 start atf-org-2026`
+restarts it without re-specifying the command. `delete` removes the entry
+completely, so the next launch needs the full
+`pm2 start npm --name atf-org-2026 -- run dev` line again.
+
 ## Project Structure
 
 - `src/routes/` - TanStack Router file-based routes
