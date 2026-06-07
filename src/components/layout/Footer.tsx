@@ -1,5 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Linkedin, Mail, MapPin, Twitter, Youtube } from "lucide-react";
+import {
+  Facebook,
+  Linkedin,
+  Mail,
+  MapPin,
+  Twitter,
+  Youtube,
+} from "lucide-react";
 
 import { SiteLogo } from "@/components/site/Page";
 
@@ -30,7 +37,7 @@ export function Footer() {
   return (
     <footer className="bg-atf-black text-white">
       <div className="atf-container py-16 lg:py-24">
-        <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-16">
+        <div className="grid gap-4 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-10=">
           <div>
             <Link to="/" className="inline-flex">
               <SiteLogo variant="bright" className="h-10 max-w-[220px]" />
@@ -81,16 +88,16 @@ export function Footer() {
             <ul className="mt-7 space-y-4 text-sm text-white/45">
               <li>
                 <a
-                  href="mailto:info@atfglobal.org"
+                  href="mailto:info@africantechnologyforum.org"
                   className="inline-flex items-center gap-2 transition-colors hover:text-white"
                 >
                   <Mail className="size-4 text-primary" aria-hidden="true" />
-                  info@atfglobal.org
+                  info@africantechnologyforum.org
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="size-4 text-primary" aria-hidden="true" />
-                Accra, Ghana
+                Kokomlemle, Accra North, Ghana
               </li>
               <li>
                 <Link

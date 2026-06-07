@@ -13,10 +13,13 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Navbar } from "@/components/layout/Navbar";
 
+let activePath = "/";
+
 afterEach(() => {
   cleanup();
   document.documentElement.style.removeProperty("--atf-header-height");
   vi.restoreAllMocks();
+  activePath = "/";
 });
 
 function rectWithHeight(height: number): DOMRect {
@@ -37,19 +40,29 @@ vi.mock("@tanstack/react-router", () => ({
   Link: ({
     to,
     params,
+    activeOptions,
     children,
     ...props
   }: {
     to: string;
     params?: Record<string, string>;
+    activeOptions?: { exact?: boolean };
     children: React.ReactNode;
     [key: string]: unknown;
   }) => {
     const href =
       params && "country" in params ? `/countries/${params.country}` : to;
+    const active = activeOptions?.exact
+      ? activePath === href
+      : activePath === href || activePath.startsWith(`${href}/`);
 
     return (
-      <a href={href} {...props}>
+      <a
+        href={href}
+        data-status={active ? "active" : undefined}
+        aria-current={active ? "page" : undefined}
+        {...props}
+      >
         {children}
       </a>
     );
@@ -202,5 +215,62 @@ describe("Navbar", () => {
 
     expect(mobilePartner.getAttribute("data-slot")).toBe("opportunity-button");
     expect(mobilePartner.getAttribute("data-variant")).toBe("primary");
+  });
+
+  it("applies the panel item state styling contract to dropdown links", () => {
+    render(<Navbar />);
+
+    fireEvent.pointerDown(screen.getByRole("button", { name: "Publications" }));
+
+    const menu = screen.getByRole("menu");
+    const newsroom = within(menu).getByRole("link", { name: "Newsroom" });
+
+    expect(newsroom.className).toContain("font-semibold");
+    expect(newsroom.className).toContain("hover:bg-atf-gray-100");
+    expect(newsroom.className).toContain("hover:text-primary");
+    expect(newsroom.className).toContain("focus:bg-atf-gray-100");
+    expect(newsroom.className).toContain("focus:text-primary");
+    expect(newsroom.className).toContain("active:bg-primary");
+    expect(newsroom.className).toContain("active:text-white");
+    expect(newsroom.className).toContain("data-[status=active]:bg-primary");
+    expect(newsroom.className).toContain("data-[status=active]:text-white");
+    expect(newsroom.className).toContain(
+      "data-[status=active]:hover:bg-primary",
+    );
+    expect(newsroom.className).toContain(
+      "data-[status=active]:focus:text-white",
+    );
+  });
+
+  it("marks only exact current-page panel links as selected", () => {
+    activePath = "/news";
+    render(<Navbar />);
+
+    fireEvent.pointerDown(screen.getByRole("button", { name: "Publications" }));
+
+    let menu = screen.getByRole("menu");
+    expect(
+      within(menu).getByRole("link", { name: "Newsroom" }).getAttribute(
+        "data-status",
+      ),
+    ).toBe("active");
+    expect(
+      within(menu).getByRole("link", { name: "Articles" }).getAttribute(
+        "data-status",
+      ),
+    ).toBeNull();
+
+    cleanup();
+    activePath = "/news/some-article";
+    render(<Navbar />);
+
+    fireEvent.pointerDown(screen.getByRole("button", { name: "Publications" }));
+
+    menu = screen.getByRole("menu");
+    expect(
+      within(menu).getByRole("link", { name: "Newsroom" }).getAttribute(
+        "data-status",
+      ),
+    ).toBeNull();
   });
 });

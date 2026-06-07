@@ -12,10 +12,24 @@ _Avoid_: decorative triangle, generic triangle motif
 A branded ATF call-to-action control shaped as a real cut-corner trapezoid. The top-right cut is mandatory and connects the control to the Opportunity Triangle geometry.
 _Avoid_: special triangle button, triangle button, CTA button
 
+**Opportunity Panel**:
+A non-button surface that uses Opportunity Triangle geometry as part of its shape. It can frame navigational or content surfaces, but it is not itself a call-to-action control.
+_Avoid_: Opportunity Button when referring to non-button surfaces, cut-corner dropdown
+
+**Panel Item State**:
+The visual state of a navigational item inside an Opportunity Panel or standard navigation panel. A panel item can be hovered, pressed, or current-page selected while the panel remains open.
+_Avoid_: assuming item selection means immediate panel dismissal
+
 ## Flagged Ambiguities
 
 **Triangle Button vs Opportunity Button**:
 Resolved to **Opportunity Button** when referring to the branded call-to-action control. Use **Opportunity Triangle** only for the underlying brand shape.
+
+**Opportunity Button vs Opportunity Panel**:
+Use **Opportunity Button** for branded call-to-action controls. Use **Opportunity Panel** for non-button surfaces that borrow Opportunity Triangle geometry.
+
+**Panel Item Selection vs Panel Dismissal**:
+Selecting a panel item does not necessarily dismiss the panel. When discussing selected panel items, preserve the possibility that the panel stays open and the item remains visibly selected.
 
 ## Example Dialogue
 

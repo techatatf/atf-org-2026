@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
 
@@ -12,14 +12,41 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
+const NAV_ROW_HEIGHT_CLASS = "h-[76px]";
+const NAV_LOGO_HEIGHT_CLASS = "h-[38px]";
+const OPPORTUNITY_PANEL_CUT_PX = 16;
+const DROPDOWN_PANEL_BORDER_PX = 1;
+const PANEL_ITEM_CLASS =
+  "rounded-none px-3 py-2 text-sm font-semibold text-atf-gray-700 transition-colors hover:bg-atf-gray-100 hover:text-primary focus:bg-atf-gray-100 focus:text-primary active:bg-primary active:text-white data-[status=active]:bg-primary data-[status=active]:text-white data-[status=active]:hover:bg-primary data-[status=active]:hover:text-white data-[status=active]:focus:bg-primary data-[status=active]:focus:text-white";
+
+type DropdownPanel = "standard" | "opportunity";
+type NavChild = { label: string; to: string };
 type NavItem =
-  | { label: string; to: string; children?: never }
-  | { label: string; to?: never; children: { label: string; to: string }[] };
+  | { label: string; to: string; children?: never; panel?: never }
+  | {
+      label: string;
+      to?: never;
+      children: NavChild[];
+      panel?: DropdownPanel;
+    };
+
+const opportunityPanelClipPath = `polygon(0 0, 100% 0, 100% 100%, ${OPPORTUNITY_PANEL_CUT_PX}px 100%, 0 calc(100% - ${OPPORTUNITY_PANEL_CUT_PX}px))`;
+
+const opportunityPanelSurfaceStyle: CSSProperties = {
+  clipPath: opportunityPanelClipPath,
+};
+
+const opportunityPanelFrameStyle: CSSProperties = {
+  ...opportunityPanelSurfaceStyle,
+  padding: DROPDOWN_PANEL_BORDER_PX,
+};
 
 const navItems: NavItem[] = [
   {
     label: "Who We Are",
+    panel: "opportunity",
     children: [
       { label: "Overview", to: "/who-we-are" },
       { label: "Our Mission, Vision and Story", to: "/about" },
@@ -28,6 +55,7 @@ const navItems: NavItem[] = [
   },
   {
     label: "What We Do",
+    panel: "opportunity",
     children: [
       { label: "Overview", to: "/what-we-do" },
       { label: "ATF Consulting", to: "/consulting" },
@@ -37,6 +65,7 @@ const navItems: NavItem[] = [
   },
   {
     label: "Where We Work",
+    panel: "opportunity",
     children: [
       { label: "Overview", to: "/where-we-work" },
       { label: "Ghana", to: "/countries/ghana" },
@@ -47,6 +76,7 @@ const navItems: NavItem[] = [
   },
   {
     label: "Publications",
+    panel: "opportunity",
     children: [
       { label: "Overview", to: "/publications" },
       { label: "Newsroom", to: "/news" },
@@ -63,18 +93,23 @@ function SmartLink({
   children,
   className,
   onClick,
+  exactActive = false,
 }: {
   to: string;
   children: ReactNode;
   className?: string;
   onClick?: () => void;
+  exactActive?: boolean;
 }) {
+  const activeOptions = exactActive ? { exact: true } : undefined;
+
   if (to.startsWith("/countries/")) {
     const country = to.replace("/countries/", "");
     return (
       <Link
         to="/countries/$country"
         params={{ country }}
+        activeOptions={activeOptions}
         className={className}
         onClick={onClick}
       >
@@ -84,9 +119,49 @@ function SmartLink({
   }
 
   return (
-    <Link to={to} className={className} onClick={onClick}>
+    <Link
+      to={to}
+      activeOptions={activeOptions}
+      className={className}
+      onClick={onClick}
+    >
       {children}
     </Link>
+  );
+}
+
+function NavDropdownPanel({
+  panel = "standard",
+  children,
+}: {
+  panel?: DropdownPanel;
+  children: ReactNode;
+}) {
+  if (panel === "opportunity") {
+    return (
+      <DropdownMenuContent
+        align="start"
+        className="min-w-64 rounded-none border-0 bg-transparent p-0 text-atf-ink shadow-none"
+      >
+        <div
+          className="bg-primary drop-shadow-xl"
+          style={opportunityPanelFrameStyle}
+        >
+          <div className="bg-white p-2" style={opportunityPanelSurfaceStyle}>
+            {children}
+          </div>
+        </div>
+      </DropdownMenuContent>
+    );
+  }
+
+  return (
+    <DropdownMenuContent
+      align="start"
+      className="min-w-64 rounded-none border-primary bg-white p-2 text-atf-ink shadow-xl"
+    >
+      {children}
+    </DropdownMenuContent>
   );
 }
 
@@ -131,49 +206,57 @@ export function Navbar() {
       <div ref={headerChromeRef}>
         <ChallengeAnnouncementBanner />
 
-        <div className="atf-container flex h-20 items-center justify-between gap-6">
+        <div
+          className={cn(
+            "atf-container flex items-center justify-between gap-6",
+            NAV_ROW_HEIGHT_CLASS,
+          )}
+        >
           <Link to="/" className="inline-flex items-center">
-            <SiteLogo variant="fullColor" className="h-10 max-w-[220px]" />
+            <SiteLogo
+              variant="fullColor"
+              className={cn(NAV_LOGO_HEIGHT_CLASS, "max-w-[220px]")}
+            />
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-1 lg:flex"
+          >
             {navItems.map((item) =>
               item.children ? (
                 <DropdownMenu key={item.label} modal={false}>
                   <DropdownMenuTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex items-center gap-1 px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-atf-black"
+                      className="inline-flex items-center gap-1 px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-primary data-[state=open]:text-primary [&[data-state=open]>svg]:rotate-180"
                     >
                       {item.label}
-                      <ChevronDown className="size-4" aria-hidden="true" />
+                      <ChevronDown
+                        className="size-4 transition-transform duration-200"
+                        aria-hidden="true"
+                      />
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="start"
-                    className="min-w-64 rounded-none border-atf-gray-200 bg-white p-2 text-atf-ink shadow-xl"
-                  >
+                  <NavDropdownPanel panel={item.panel}>
                     {item.children.map((child) => (
                       <DropdownMenuItem
                         key={child.to}
                         asChild
-                        className="rounded-none focus:bg-atf-gray-100 focus:text-atf-black"
+                        className={PANEL_ITEM_CLASS}
                       >
-                        <SmartLink
-                          to={child.to}
-                          className="block cursor-pointer px-3 py-2 text-sm text-atf-gray-700 hover:text-atf-black"
-                        >
+                        <SmartLink to={child.to} exactActive>
                           {child.label}
                         </SmartLink>
                       </DropdownMenuItem>
                     ))}
-                  </DropdownMenuContent>
+                  </NavDropdownPanel>
                 </DropdownMenu>
               ) : (
                 <SmartLink
                   key={item.to}
                   to={item.to}
-                  className="px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-atf-black"
+                  className="px-3 py-2 font-display text-xs font-bold uppercase text-atf-gray-700 transition-colors hover:text-primary"
                 >
                   {item.label}
                 </SmartLink>
@@ -215,7 +298,10 @@ export function Navbar() {
           <div className="flex flex-col gap-1">
             {navItems.map((item) =>
               item.children ? (
-                <div key={item.label} className="border-b border-atf-gray-200 py-3">
+                <div
+                  key={item.label}
+                  className="border-b border-atf-gray-200 py-3"
+                >
                   <p className="mb-3 font-display text-xs font-bold uppercase text-atf-gray-500">
                     {item.label}
                   </p>

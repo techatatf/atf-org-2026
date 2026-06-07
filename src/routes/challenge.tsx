@@ -51,13 +51,6 @@ function ChallengePage() {
             >
               Apply Now
             </OpportunityButton>
-            <OpportunityButton
-              href="/chapters"
-              variant="inverseOutline"
-              size="lg"
-            >
-              Join a Chapter
-            </OpportunityButton>
           </div>
         </div>
         <div className="relative min-h-[360px] bg-atf-black">
@@ -84,13 +77,18 @@ function ChallengePage() {
             </h3>
             <ol className="mt-6 grid gap-5">
               {timeline.map((item) => (
-                <li key={item.phase} className="grid grid-cols-[10px_1fr] gap-4">
+                <li
+                  key={item.phase}
+                  className="grid grid-cols-[10px_1fr] gap-4"
+                >
                   <span className="mt-2 h-0 w-0 border-y-[5px] border-l-[8px] border-y-transparent border-l-primary" />
                   <span>
                     <span className="block font-display text-sm font-bold uppercase text-atf-black">
                       {item.phase}
                     </span>
-                    <span className="text-sm text-atf-gray-500">{item.date}</span>
+                    <span className="text-sm text-atf-gray-500">
+                      {item.date}
+                    </span>
                   </span>
                 </li>
               ))}
