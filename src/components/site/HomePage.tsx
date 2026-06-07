@@ -39,8 +39,8 @@ const newsCategories = [
 ];
 
 const heroContent = {
-  eyebrow: "Established 1987 - Pan-African Science & Technology Network",
-  headlineLead: "Promoting the development of",
+  eyebrow: "Established 1987 • Pan-African Science & Technology Network",
+  headlinePrefixLines: ["Promoting the", "development of"],
   headlineEmphasis: "science & technology",
   headlineTail: "across Africa.",
   body: "For over three decades, the African Technology Forum has partnered with governments, institutions, and enterprises to build Africa's scientific and technological capacity.",
@@ -144,20 +144,24 @@ function DesktopHero({
           <HeroPlayButton onClick={() => onVideoOpen(true)} />
         </div>
 
-        <div className="flex items-center bg-transparent px-16 py-16 text-white">
-          <div className="max-w-xl lg:ml-8">
-            <p className="mb-6 flex items-center gap-3 font-display text-xs font-bold uppercase text-white/85">
-              <span className="h-px w-7 bg-white" aria-hidden="true" />
+        <div className="flex items-center bg-transparent py-14 pl-0 pr-20 text-white">
+          <div className="max-w-xl">
+            <p className="mb-6 flex items-center gap-3 font-display text-[10px] xl:text-xs tracking-wider font-bold uppercase text-white/85">
               {heroContent.eyebrow}
             </p>
-            <h1 className="font-display text-5xl font-black uppercase leading-none 2xl:text-6xl">
-              {heroContent.headlineLead}{" "}
-              <span className="text-white/85 italic">
+
+            <h1 className="font-display text-[clamp(34px,3.2vw,54px)] font-black uppercase leading-[0.98]">
+              {heroContent.headlinePrefixLines.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+              <span className="block text-white/85 italic">
                 {heroContent.headlineEmphasis}
-              </span>{" "}
-              {heroContent.headlineTail}
+              </span>
+              <span className="block">{heroContent.headlineTail}</span>
             </h1>
-            <p className="mt-6 text-base leading-8 text-white/90">
+            <p className="mt-6 max-w-[420px] text-base leading-[1.6] text-white/90">
               {heroContent.body}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -176,13 +180,13 @@ function DesktopHero({
                 {heroContent.ctas[1].label}
               </OpportunityButton>
             </div>
-            <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/20 pt-6">
+            <div className="mt-9 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/20 pt-6">
               {heroContent.stats.map((stat) => (
                 <div key={stat.label}>
                   <div className="font-display text-3xl font-black">
                     {stat.value}
                   </div>
-                  <div className="mt-1 text-xs font-semibold uppercase text-white/70">
+                  <div className="mt-1 text-xs font-bold uppercase leading-4 text-white/70">
                     {stat.label}
                   </div>
                 </div>
@@ -251,26 +255,28 @@ function CompactHero({
         )}
       >
         <div className="mx-auto max-w-2xl">
-          <p className="mb-5 flex items-center gap-3 font-display text-[11px] font-bold uppercase leading-5 text-primary">
-            <span className="h-px w-7 bg-primary" aria-hidden="true" />
+          <p className="mb-5 flex items-center gap-3 font-display text-xs font-bold uppercase leading-5 tracking-wider text-primary">
             {heroContent.eyebrow}
           </p>
-          <h1 className="font-display text-3xl font-black uppercase leading-tight text-atf-black sm:text-4xl">
-            {heroContent.headlineLead}{" "}
-            <span className="text-primary italic">
+          <h1 className="font-display text-3xl font-black uppercase leading-[0.98] text-atf-black sm:text-4xl">
+            {heroContent.headlinePrefixLines.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+            <span className="block text-primary italic">
               {heroContent.headlineEmphasis}
-            </span>{" "}
-            {heroContent.headlineTail}
+            </span>
+            <span className="block">{heroContent.headlineTail}</span>
           </h1>
-          <p className="mt-5 text-base leading-7 text-atf-gray-500">
+          <p className="mt-5 max-w-[420px] text-base leading-[1.6] text-atf-gray-500">
             {heroContent.body}
           </p>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div className="mt-7 flex flex-wrap gap-3">
             <OpportunityButton
               href={heroContent.ctas[0].href}
               variant="primary"
               size="lg"
-              className="w-full sm:w-auto"
             >
               {heroContent.ctas[0].label}
             </OpportunityButton>
@@ -278,18 +284,17 @@ function CompactHero({
               href={heroContent.ctas[1].href}
               variant="outline"
               size="lg"
-              className="w-full sm:w-auto"
             >
               {heroContent.ctas[1].label}
             </OpportunityButton>
           </div>
-          <div className="mt-8 grid grid-cols-3 gap-3 border-t border-atf-gray-200 pt-5">
+          <div className="mt-7 flex flex-wrap gap-x-10 gap-y-4 border-t border-atf-gray-200 pt-5">
             {heroContent.stats.map((stat) => (
               <div key={stat.label} className="min-w-0">
                 <div className="font-display text-2xl font-black leading-none text-atf-black sm:text-3xl">
                   {stat.value}
                 </div>
-                <div className="mt-2 break-words font-display text-[10px] font-bold uppercase leading-4 text-atf-gray-500">
+                <div className="mt-1.5 break-words font-display text-[10px] font-bold uppercase leading-4 text-atf-gray-500">
                   {stat.label}
                 </div>
               </div>
