@@ -110,9 +110,7 @@ export function Eyebrow({
   light?: boolean;
 }) {
   return (
-    <p className={cn("atf-eyebrow", light && "text-white/65")}>
-      {children}
-    </p>
+    <p className={cn("atf-eyebrow", light && "text-white/65")}>{children}</p>
   );
 }
 
@@ -130,7 +128,7 @@ export function SectionHeader({
   dark?: boolean;
 }) {
   return (
-    <div className="mb-12 grid gap-6 lg:grid-cols-[1fr_0.75fr] lg:items-end">
+    <div className="mb-12 grid gap-6 lg:grid-cols-[1fr_0.75fr] lg:items-start">
       <div>
         <Eyebrow light={dark}>{eyebrow}</Eyebrow>
         <h2 className={cn("atf-section-title", dark && "text-white")}>
@@ -243,7 +241,11 @@ export function ContentBand({
     <section
       className={cn(
         "py-16 lg:py-24",
-        dark ? "bg-atf-black text-white" : muted ? "bg-atf-gray-50" : "bg-white",
+        dark
+          ? "bg-atf-black text-white"
+          : muted
+            ? "bg-atf-gray-50"
+            : "bg-white",
         className,
       )}
     >
@@ -412,7 +414,9 @@ export function ArticleCard({
       <h2 className="mt-3 font-display text-2xl font-black uppercase leading-tight text-atf-black group-hover:text-primary">
         {title}
       </h2>
-      {description ? <p className="atf-body mt-3 text-sm">{description}</p> : null}
+      {description ? (
+        <p className="atf-body mt-3 text-sm">{description}</p>
+      ) : null}
       {children}
     </SurfaceCard>
   );

@@ -29,7 +29,7 @@ export const chapters = [
   {
     country: "Nigeria",
     slug: "nigeria",
-    code: "NG",
+    flag: "🇳🇬",
     count: 12,
     description:
       "Rapidly growing tech ecosystem with strong university partnerships and an emerging startup culture.",
@@ -37,7 +37,7 @@ export const chapters = [
   {
     country: "Ghana",
     slug: "ghana",
-    code: "GH",
+    flag: "🇬🇭",
     count: 8,
     description:
       "Our founding nation with the largest concentration of chapters, programs, and our headquarters in Accra.",
@@ -45,7 +45,7 @@ export const chapters = [
   {
     country: "Kenya",
     slug: "kenya",
-    code: "KE",
+    flag: "🇰🇪",
     count: 6,
     description:
       "East Africa's leading tech hub, driving mobile-first innovation and fintech solutions at scale.",
@@ -53,7 +53,7 @@ export const chapters = [
   {
     country: "South Africa",
     slug: "south-africa",
-    code: "ZA",
+    flag: "🇿🇦",
     count: 4,
     description:
       "Connecting established tech industry with emerging innovation ecosystems across Southern Africa.",

@@ -34,8 +34,8 @@ function ChaptersPage() {
               href={`/countries/${chapter.slug}`}
               className="group bg-white p-7 transition-colors hover:bg-atf-gray-50"
             >
-              <div className="inline-flex size-12 items-center justify-center bg-primary text-sm font-black text-white">
-                {chapter.code}
+              <div className="text-4xl leading-none" aria-hidden="true">
+                {chapter.flag}
               </div>
               <h2 className="mt-6 font-display text-xl font-black uppercase text-atf-black">
                 {chapter.country}

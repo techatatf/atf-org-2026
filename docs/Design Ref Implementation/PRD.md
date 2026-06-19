@@ -119,7 +119,7 @@ The V2 reference contains a few details that should be translated carefully rath
 - The reference uses a single-page structure, but the production app should keep route-level pages.
 - The reference uses direct DOM scripts; production should use React state and effects.
 - The reference includes a feature-video placeholder for a missing file. The production app should either keep this as a non-breaking placeholder or omit the video action until a real video asset exists.
-- The reference uses emoji flags in chapter cards. Production should decide whether to keep them temporarily or replace them with a more formal visual treatment.
+- Country flag emoji are approved for chapter and country cards as compact location labels; decorative emoji remain outside the production visual language.
 - The reference has some future-dated/event-specific copy. Confirm copy before launch if accuracy matters.
 - The current app includes devtools and prototype feedback surfaces. Those should not remain visible in the final public implementation.
 

@@ -156,7 +156,7 @@ function DesktopHero({
                   {line}
                 </span>
               ))}
-              <span className="block text-white/85 italic">
+              <span className="block text-white italic">
                 {heroContent.headlineEmphasis}
               </span>
               <span className="block">{heroContent.headlineTail}</span>
@@ -436,7 +436,7 @@ function ImpactSection() {
 function AboutSection() {
   return (
     <ContentBand>
-      <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+      <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-start">
         <div>
           <Eyebrow>Who We Are</Eyebrow>
           <h2 className="atf-section-title">
@@ -459,7 +459,7 @@ function AboutSection() {
             <ArrowRight className="size-4" aria-hidden="true" />
           </AppLink>
         </div>
-        <div className="grid grid-cols-2 gap-px bg-atf-gray-200">
+        <div className="grid grid-cols-2 gap-px bg-atf-gray-200 lg:mt-12">
           {[
             { value: "30+", label: "Years partnering with institutions" },
             { value: "12", label: "Countries with active programs" },
@@ -499,11 +499,12 @@ function ProgramsSection() {
         eyebrow="What We Do"
         title={
           <>
-            Three flagship initiatives driving{" "}
-            <span className="text-primary italic">technology innovation</span>.
+            Three flagship{" "}
+            <span className="text-primary italic">initiatives</span> driving
+            technology innovation.
           </>
         }
-        body="Our work spans expert advisory services, grassroots innovation, and community-led capacity building."
+        // body="Our work spans expert advisory services, grassroots innovation, and community-led capacity building."
       />
       <div className="grid gap-px bg-atf-gray-200 lg:grid-cols-3">
         {programs.map((program) => {
@@ -605,7 +606,12 @@ function ChaptersSection() {
     <ContentBand>
       <SectionHeader
         eyebrow="Where We Work"
-        title="Our chapters span across Africa."
+        title={
+          <>
+            Our <span className="text-primary italic">chapters</span> span
+            across Africa.
+          </>
+        }
         action={
           <AppLink href="/chapters" className="atf-link">
             View all chapters
@@ -620,8 +626,8 @@ function ChaptersSection() {
             href={`/countries/${chapter.slug}`}
             className="group relative overflow-hidden bg-atf-gray-50 p-7 transition-colors hover:bg-white"
           >
-            <div className="font-display text-3xl font-black text-atf-black">
-              {chapter.code}
+            <div className="text-4xl leading-none" aria-hidden="true">
+              {chapter.flag}
             </div>
             <h3 className="mt-6 font-display text-xl font-black uppercase text-atf-black">
               {chapter.country}
@@ -725,8 +731,8 @@ function NewsSection({
         eyebrow="Newsroom"
         title={
           <>
-            The latest from across the{" "}
-            <span className="text-primary italic">network</span>.
+            The <span className="text-primary italic">latest</span> from across
+            the network.
           </>
         }
         action={

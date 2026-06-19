@@ -213,8 +213,9 @@ export function WhatWeDoLandingPage() {
           eyebrow="What We Do"
           title={
             <>
-              Three flagship initiatives driving{" "}
-              <span className="text-primary italic">technology innovation</span>.
+              Three flagship{" "}
+              <span className="text-primary italic">initiatives</span> driving
+              technology innovation.
             </>
           }
           body="The homepage introduces the initiatives. This overview shows how they reinforce one another across strategy, talent development, and community-led implementation."
@@ -232,7 +233,10 @@ export function WhatWeDoLandingPage() {
                 <div className="font-display text-xs font-bold text-atf-gray-500">
                   {program.index}
                 </div>
-                <Icon className="mt-8 size-11 text-atf-black" aria-hidden="true" />
+                <Icon
+                  className="mt-8 size-11 text-atf-black"
+                  aria-hidden="true"
+                />
                 <h2 className="mt-7 font-display text-2xl font-black uppercase leading-tight text-atf-black">
                   {program.title}
                 </h2>
@@ -296,8 +300,8 @@ export function WhereWeWorkLandingPage() {
               href={`/countries/${chapter.slug}`}
               className="group bg-white p-7 transition-colors hover:bg-atf-gray-50"
             >
-              <div className="inline-flex size-12 items-center justify-center bg-primary text-sm font-black text-white">
-                {chapter.code}
+              <div className="text-4xl leading-none" aria-hidden="true">
+                {chapter.flag}
               </div>
               <h2 className="mt-6 font-display text-xl font-black uppercase text-atf-black">
                 {chapter.country}
@@ -323,7 +327,12 @@ export function WhereWeWorkLandingPage() {
       <ContentBand muted>
         <SectionHeader
           eyebrow="Where We Work"
-          title="Our chapters span across Africa."
+          title={
+            <>
+              Our <span className="text-primary italic">chapters</span> span
+              across Africa.
+            </>
+          }
           body="The homepage introduces the visible chapter footprint. This overview expands that view into country entry points, local community roles, and the way chapters connect students, practitioners, partners, and programs."
           action={
             <AppLink href="/chapters" className="atf-link">
@@ -367,7 +376,9 @@ export function WhereWeWorkLandingPage() {
 
 export function PublicationsLandingPage() {
   const featuredNews = newsItems.find((item) => item.featured) ?? newsItems[0];
-  const latestNews = newsItems.filter((item) => item.id !== featuredNews.id).slice(0, 3);
+  const latestNews = newsItems
+    .filter((item) => item.id !== featuredNews.id)
+    .slice(0, 3);
   const latestArticle = articles[0];
   const latestResearch = researchPapers[0];
 

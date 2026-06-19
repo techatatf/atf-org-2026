@@ -45,7 +45,7 @@ that guidance should be mapped into the React app.
 
 **Voice:**
 - Third-person institutional for official communications; first-person plural ("we", "our") for community-facing copy
-- No emoji in formal materials
+- No decorative emoji in formal materials
 - Titles and headings in Title Case or ALL CAPS (consistent with logo wordmark)
 - Short, declarative sentences preferred
 
@@ -56,9 +56,9 @@ that guidance should be mapped into the React app.
 
 **Casing:** ALL CAPS for logotype and primary display headlines; Title Case for subheadings and body section titles; sentence case for body copy.
 
-**Unicode / Emoji:** Not used. No decorative characters. Emoji flags in any
-prototype or reference copy should be treated as informal placeholders, not core
-brand elements.
+**Unicode / Emoji:** Decorative emoji are not used. Country flag emoji are the
+approved exception for country and chapter cards, where they act as compact
+location labels and the written country name remains the accessible label.
 
 ---
 
@@ -159,7 +159,8 @@ The angled cut creates a triangular red shape that "pushes" into the image — s
 - No custom icon set provided
 - Brand relies on the Africa brandmark as primary iconographic element
 - Lucide Icons used as a substitute for UI icons in references; production should use the installed `lucide-react` package.
-- No emoji in UI
+- No decorative emoji in UI; country flag emoji are allowed on country and
+  chapter cards.
 
 ### Animation
 - Minimal; no animation defined in brand materials
