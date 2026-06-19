@@ -136,7 +136,7 @@ export function SectionHeader({
         </h2>
       </div>
       {(body || action) && (
-        <div className="space-y-6">
+        <div className="space-y-6 justify-self-end">
           {body ? (
             <p className={cn("atf-body", dark && "text-white/60")}>{body}</p>
           ) : null}

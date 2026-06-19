@@ -545,7 +545,7 @@ function ProgramsSection() {
 function FunderSection() {
   return (
     <ContentBand dark>
-      <div className="grid gap-12 lg:grid-cols-[0.9fr_1fr] lg:items-center">
+      <div className="grid gap-12 lg:grid-cols-[0.9fr_1fr] lg:items-start">
         <div>
           <Eyebrow light>For Partners & Funders</Eyebrow>
           <h2 className="atf-section-title text-white">
@@ -559,7 +559,7 @@ function FunderSection() {
             implement programs at scale.
           </p>
         </div>
-        <div className="grid gap-0">
+        <div className="grid gap-0 mt-12">
           {[
             {
               title: "Submit a Partnership Inquiry",
